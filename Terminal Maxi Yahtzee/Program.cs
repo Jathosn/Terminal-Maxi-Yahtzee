@@ -7,69 +7,45 @@ namespace Terminal_Maxi_Yahtzee
     class Player
     {
         public string Name { get; set; }
-        public Dictionary<string, int> PlayerCard { get; set; }
+        public Dictionary<string, int?> PlayerCard { get; set; }
 
         public Player(string name)
         {
             Name = name;
-            PlayerCard = new Dictionary<string, int>
-            {
-                { "ones", 0 },
-                { "twos", 0 },
-                { "threes", 0 },
-                { "fours", 0 },
-                { "fives", 0 },
-                { "sixes", 0 },
-                { "to bonus", 84 },
-                { "one pair", 0 },
-                { "two pairs", 0 },
-                { "three pairs", 0 },
-                { "3 same", 0 },
-                { "4 same", 0 },
-                { "5 same", 0 },
-                { "small straight", 0 },
-                { "large straight", 0 },
-                { "full straight", 0 },
-                { "hut 2+3", 0 },
-                { "house 3+3", 0 },
-                { "tower 2+4", 0 },
-                { "chance", 0 },
-                { "maxi-yahtzee", 0 }
-            };
+            PlayerCard = new Dictionary<string, int?>
+        {
+            { "ones", null },
+            { "twos", null },
+            { "threes", null },
+            { "fours", null },
+            { "fives", null },
+            { "sixes", null },
+            { "to bonus", null }, // Bonus might be handled differently based on game rules
+            { "one pair", null },
+            { "two pairs", null },
+            { "three pairs", null },
+            { "3 same", null },
+            { "4 same", null },
+            { "5 same", null },
+            { "small straight", null },
+            { "large straight", null },
+            { "full straight", null },
+            { "hut 2+3", null },
+            { "house 3+3", null },
+            { "tower 2+4", null },
+            { "chance", null },
+            { "maxi-yahtzee", null }
+        };
         }
 
         public void PrintPlayerCard()
         {
             Console.WriteLine($"{Name}'s Scorecard:");
-            int maxKeyLength = 0;
-            foreach (var key in PlayerCard.Keys)
+            int maxKeyLength = PlayerCard.Keys.Max(key => key.Length);
+            foreach (var entry in PlayerCard)
             {
-                if (key.Length > maxKeyLength)
-                {
-                    maxKeyLength = key.Length;
-                }
-            }
-
-            foreach (KeyValuePair<string, int> entry in PlayerCard)
-            {
-                Console.WriteLine($"{entry.Key.PadRight(maxKeyLength)}: {entry.Value}");
-            }
-        }
-        public void ChooseScoreCategory(int diceSum)
-        {
-            PrintPlayerCard();
-            Console.WriteLine("Choose a category to score your dice sum:");
-            string chosenCategory = Console.ReadLine().ToLower().Trim();
-
-            if (PlayerCard.ContainsKey(chosenCategory) && PlayerCard[chosenCategory] == 0)
-            {
-                PlayerCard[chosenCategory] = diceSum;
-                Console.WriteLine($"Updated {chosenCategory} with {diceSum} points.");
-            }
-            else
-            {
-                Console.WriteLine("Invalid category or already scored. Please try again.");
-                ChooseScoreCategory(diceSum); // Retry if invalid input
+                string scoreText = entry.Value.HasValue ? entry.Value.ToString() : "-";
+                Console.WriteLine($"{entry.Key.PadRight(maxKeyLength)}: {scoreText}");
             }
         }
         public void ChooseScoreCategory(int[] diceValues)
@@ -78,9 +54,8 @@ namespace Terminal_Maxi_Yahtzee
             Console.WriteLine("Choose a category to score:");
             string chosenCategory = Console.ReadLine().ToLower().Trim();
 
-            if (PlayerCard.ContainsKey(chosenCategory) && PlayerCard[chosenCategory] == 0)
+            if (PlayerCard.ContainsKey(chosenCategory) && !PlayerCard[chosenCategory].HasValue)
             {
-                // Calculate the score using the appropriate function from the ScoreCalculator
                 int score = ScoreCalculator.ScoreFunctions[chosenCategory](diceValues);
                 PlayerCard[chosenCategory] = score;
                 Console.WriteLine($"Updated {chosenCategory} with {score} points.");
