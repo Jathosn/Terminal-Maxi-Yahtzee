@@ -94,8 +94,8 @@ namespace Terminal_Maxi_Yahtzee
 
         public bool IsScoreboardComplete()
         {
-            // Return true if all categories have been scored (i.e., not equal to 0 or untouched values)
-            return PlayerCard.All(kvp => kvp.Value != 0 || kvp.Key == "to bonus");  // Assuming "to bonus" starts at 84 and is not to be changed by player actions directly
+            // Assuming no entry should remain 0 (assuming your game rules don't score zeros in a valid play)
+            return PlayerCard.Values.All(score => score != 0);
         }
     }
     class DiceThrower
@@ -300,10 +300,10 @@ namespace Terminal_Maxi_Yahtzee
                 players.Add(new Player(name));
             }
 
-            bool allPlayersComplete = false;
-            while (!allPlayersComplete)
+            bool allScoreboardsComplete = false;
+            while (!allScoreboardsComplete)
             {
-                allPlayersComplete = true; // Assume all are complete unless found otherwise
+                allScoreboardsComplete = true; // Assume all are complete unless found otherwise
 
                 foreach (Player player in players)
                 {
@@ -336,6 +336,7 @@ namespace Terminal_Maxi_Yahtzee
                     // Now passing the array of dice values instead of their sum
                     player.ChooseScoreCategory(diceThrower.DiceValues);
                     Console.WriteLine();
+                    allScoreboardsComplete = false;
                 }
             }
 
