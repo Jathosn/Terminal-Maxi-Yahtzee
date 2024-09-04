@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Terminal_Maxi_Yahtzee
 {
     class Player
     {
+        public string Name { get; set; }
+        public Dictionary<string, int> PlayerCard { get; set; }
 
-        public static Dictionary<string, int> playerCard = new Dictionary<string, int>
+        public Player(string name)
+        {
+            Name = name;
+            PlayerCard = new Dictionary<string, int>
             {
                 { "ones", 0 },
                 { "twos", 0 },
@@ -18,7 +19,7 @@ namespace Terminal_Maxi_Yahtzee
                 { "fours", 0 },
                 { "fives", 0 },
                 { "sixes", 0 },
-                {"to bonus", 88 },
+                { "to bonus", 84 },
                 { "one pair", 0 },
                 { "two pairs", 0 },
                 { "three pairs", 0 },
@@ -34,11 +35,13 @@ namespace Terminal_Maxi_Yahtzee
                 { "chance", 0 },
                 { "maxi-yahtzee", 0 }
             };
-        public static void PrintPlayerCard(Dictionary<string, int> dict)
+        }
+
+        public void PrintPlayerCard()
         {
-            // Find the longest key in the dictionary
+            Console.WriteLine($"{Name}'s Scorecard:");
             int maxKeyLength = 0;
-            foreach (var key in dict.Keys)
+            foreach (var key in PlayerCard.Keys)
             {
                 if (key.Length > maxKeyLength)
                 {
@@ -46,17 +49,34 @@ namespace Terminal_Maxi_Yahtzee
                 }
             }
 
-            foreach (KeyValuePair<string, int> entry in dict)
+            foreach (KeyValuePair<string, int> entry in PlayerCard)
             {
                 Console.WriteLine($"{entry.Key.PadRight(maxKeyLength)}: {entry.Value}");
             }
         }
     }
+
     internal class Program
     {
         static void Main(string[] args)
         {
-            Player.PrintPlayerCard(Player.playerCard);
+            List<Player> players = new List<Player>();
+            Console.Write("Enter the number of players: ");
+            int playerCount = int.Parse(Console.ReadLine());
+
+            for (int i = 1; i <= playerCount; i++)
+            {
+                Console.Write($"Enter name for player {i}: ");
+                string name = Console.ReadLine();
+                players.Add(new Player(name));
+            }
+
+            foreach (Player player in players)
+            {
+                player.PrintPlayerCard();
+                Console.WriteLine(); // Add a space between players' cards for better readability.
+            }
+
             Console.ReadLine();
         }
     }
