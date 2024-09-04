@@ -20,7 +20,6 @@ namespace Terminal_Maxi_Yahtzee
             { "fours", null },
             { "fives", null },
             { "sixes", null },
-            { "to bonus", null }, // Bonus might be handled differently based on game rules
             { "one pair", null },
             { "two pairs", null },
             { "three pairs", null },
@@ -230,7 +229,7 @@ namespace Terminal_Maxi_Yahtzee
 
         private static int GetFullStraightScore(int[] dice)
         {
-            return new HashSet<int>(dice).Count == 5 ? 30 : 0;
+            return new HashSet<int>(dice).Count == 6 ? 21 : 0;
         }
 
         private static int GetFullHouseScore(int[] dice)
