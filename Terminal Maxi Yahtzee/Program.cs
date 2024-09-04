@@ -306,6 +306,8 @@ namespace Terminal_Maxi_Yahtzee
                     if (!player.IsScoreboardComplete())
                     {
                         Console.WriteLine($"{player.Name}'s turn.");
+                        Console.WriteLine("Press any key to start your turn...");
+                        Console.ReadKey();
                         DiceThrower diceThrower = new DiceThrower();
                         int throwCount = 1;
 
