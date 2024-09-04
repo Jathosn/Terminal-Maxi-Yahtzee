@@ -307,17 +307,26 @@ namespace Terminal_Maxi_Yahtzee
 
                 foreach (Player player in players)
                 {
-                    Console.WriteLine($"{player.Name}'s turn to throw dice.");
+                    Console.WriteLine($"\n{player.Name}'s turn to throw dice. \n");
                     DiceThrower diceThrower = new DiceThrower();
-                    int throwCount = 10;
+                    int throwCount = 3;  // Total number of throws allowed
 
                     for (int i = 0; i < throwCount; i++)
                     {
+                        Console.WriteLine($"Throw {i + 1}:\n");
                         diceThrower.DisplayDice();
-                        if (i < throwCount - 1) // Allow rerolling only if it's not the last throw
+
+                        // Calculate and display throws remaining
+                        int throwsRemaining = throwCount - i - 1;
+                        if (throwsRemaining > 0)
                         {
+                            Console.WriteLine($"You have {throwsRemaining} throws remaining.");
                             bool[] diceToKeep = diceThrower.GetDiceToKeep();
                             diceThrower.RollSpecificDice(diceToKeep);
+                        }
+                        else
+                        {
+                            Console.WriteLine("No throws remaining.");
                         }
                     }
 
@@ -327,7 +336,6 @@ namespace Terminal_Maxi_Yahtzee
                     // Now passing the array of dice values instead of their sum
                     player.ChooseScoreCategory(diceThrower.DiceValues);
                     Console.WriteLine();
-                    allPlayersComplete = false;
                 }
             }
 
