@@ -72,6 +72,11 @@ namespace Terminal_Maxi_Yahtzee
                 ChooseScoreCategory(diceSum); // Retry if invalid input
             }
         }
+        public bool IsScoreboardComplete()
+        {
+            // Return true if all categories have been scored (i.e., not equal to 0 or untouched values)
+            return PlayerCard.All(kvp => kvp.Value != 0 || kvp.Key == "to bonus");  // Assuming "to bonus" starts at 84 and is not to be changed by player actions directly
+        }
     }
     class DiceThrower
     {
@@ -142,27 +147,45 @@ namespace Terminal_Maxi_Yahtzee
                 players.Add(new Player(name));
             }
 
-            foreach (Player player in players)
+            bool allPlayersComplete = false;
+            while (!allPlayersComplete)
             {
-                Console.WriteLine($"{player.Name}'s turn to throw dice.");
-                DiceThrower diceThrower = new DiceThrower();
-                int throwCount = 3;
+                allPlayersComplete = true; // Assume all are complete unless found otherwise
 
-                for (int i = 0; i < throwCount; i++)
+                foreach (Player player in players)
                 {
-                    diceThrower.DisplayDice();
-                    if (i < throwCount - 1) // Allow rerolling only if it's not the last throw
+                    if (!player.IsScoreboardComplete())
                     {
-                        bool[] diceToKeep = diceThrower.GetDiceToKeep();
-                        diceThrower.RollSpecificDice(diceToKeep);
+                        Console.WriteLine($"{player.Name}'s turn to throw dice.");
+                        DiceThrower diceThrower = new DiceThrower();
+                        int throwCount = 3;
+
+                        for (int i = 0; i < throwCount; i++)
+                        {
+                            diceThrower.DisplayDice();
+                            if (i < throwCount - 1)
+                            {
+                                bool[] diceToKeep = diceThrower.GetDiceToKeep();
+                                diceThrower.RollSpecificDice(diceToKeep);
+                            }
+                        }
+
+                        Console.WriteLine("Final dice values:");
+                        diceThrower.DisplayDice();
+
+                        // Sum the final dice values and let player choose a score category
+                        int diceSum = diceThrower.DiceValues.Sum();
+                        player.ChooseScoreCategory(diceSum);
+                        Console.WriteLine();
+                        allPlayersComplete = false; // If any player is not complete, set to false
                     }
                 }
+            }
 
-                Console.WriteLine("Final dice values:");
-                diceThrower.DisplayDice();
-                int diceSum = diceThrower.DiceValues.Sum();
-                player.ChooseScoreCategory(diceSum);
-                Console.WriteLine();
+            Console.WriteLine("Game Over! Final Scores:");
+            foreach (Player player in players)
+            {
+                player.PrintPlayerCard();
             }
 
             Console.ReadLine();
