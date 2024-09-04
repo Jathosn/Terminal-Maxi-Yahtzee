@@ -287,7 +287,7 @@ namespace Terminal_Maxi_Yahtzee
 
                     for (int i = 0; i < throwCount; i++)
                     {
-                        Console.WriteLine($"Throw {i + 1}:\n");
+                            Console.WriteLine($"Throw {i + 1}/{throwCount}");
                         diceThrower.DisplayDice();
 
                         // Calculate and display throws remaining
