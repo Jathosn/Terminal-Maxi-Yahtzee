@@ -68,9 +68,16 @@ namespace Terminal_Maxi_Yahtzee
 
         public bool IsScoreboardComplete()
         {
-            // Assuming no entry should remain 0 (assuming your game rules don't score zeros in a valid play)
-            return PlayerCard.Values.All(score => score != 0);
+            // Checks that every score has an int value
+            return PlayerCard.Values.All(score => score.HasValue);
         }
+
+        public int CalculateTotalScore()
+        {
+            // Sum all values in the PlayerCard dictionary that have been set (not null)
+            return PlayerCard.Values.Where(v => v.HasValue).Sum(v => v.Value);
+        }
+
     }
     class DiceThrower
     {
@@ -125,7 +132,7 @@ namespace Terminal_Maxi_Yahtzee
             }
             return diceToKeep;
         }
-}
+    }
     class ScoreCalculator
     {
         public static Dictionary<string, Func<int[], int>> ScoreFunctions { get; private set; }
@@ -274,50 +281,55 @@ namespace Terminal_Maxi_Yahtzee
                 players.Add(new Player(name));
             }
 
-            bool allScoreboardsComplete = false;
-            while (!allScoreboardsComplete)
+            while (true)  // Keep looping until all scoreboards are complete
             {
-                allScoreboardsComplete = true; // Assume all are complete unless found otherwise
-
                 foreach (Player player in players)
                 {
-                    Console.WriteLine($"\n{player.Name}'s turn to throw dice. \n");
-                    DiceThrower diceThrower = new DiceThrower();
-                    int throwCount = 3;  // Total number of throws allowed
-
-                    for (int i = 0; i < throwCount; i++)
+                    if (!player.IsScoreboardComplete())
                     {
+                        Console.WriteLine($"{player.Name}'s turn.");
+                        DiceThrower diceThrower = new DiceThrower();
+                        int throwCount = 1;
+
+                        for (int i = 0; i < throwCount; i++)
+                        {
                             Console.WriteLine($"Throw {i + 1}/{throwCount}");
+                            diceThrower.DisplayDice();
+
+                            int throwsRemaining = throwCount - i - 1;
+                            if (throwsRemaining > 0)
+                            {
+                                Console.WriteLine($"You have {throwsRemaining} throws remaining.");
+                                bool[] diceToKeep = diceThrower.GetDiceToKeep();
+                                diceThrower.RollSpecificDice(diceToKeep);
+                            }
+                            else
+                            {
+                                Console.WriteLine("No throws remaining.");
+                            }
+                        }
+
+                        Console.WriteLine("Final dice values:");
                         diceThrower.DisplayDice();
-
-                        // Calculate and display throws remaining
-                        int throwsRemaining = throwCount - i - 1;
-                        if (throwsRemaining > 0)
-                        {
-                            Console.WriteLine($"You have {throwsRemaining} throws remaining.");
-                            bool[] diceToKeep = diceThrower.GetDiceToKeep();
-                            diceThrower.RollSpecificDice(diceToKeep);
-                        }
-                        else
-                        {
-                            Console.WriteLine("No throws remaining.");
-                        }
+                        player.ChooseScoreCategory(diceThrower.DiceValues);
+                        Console.WriteLine();
                     }
+                }
 
-                    Console.WriteLine("Final dice values:");
-                    diceThrower.DisplayDice();
-
-                    // Now passing the array of dice values instead of their sum
-                    player.ChooseScoreCategory(diceThrower.DiceValues);
-                    Console.WriteLine();
-                    allScoreboardsComplete = false;
+                // Check if all players are complete
+                if (players.All(p => p.IsScoreboardComplete()))
+                {
+                    Console.WriteLine("All scoreboards are filled. Ending game.");
+                    break;
                 }
             }
 
             Console.WriteLine("Game Over! Final Scores:");
             foreach (Player player in players)
             {
+                int totalScore = player.CalculateTotalScore();
                 player.PrintPlayerCard();
+                Console.WriteLine($"\n{player.Name}'s Total Score: {totalScore}");
             }
 
             Console.ReadLine();
