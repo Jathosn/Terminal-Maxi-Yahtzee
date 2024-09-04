@@ -50,7 +50,9 @@ namespace Terminal_Maxi_Yahtzee
         public void ChooseScoreCategory(int[] diceValues)
         {
             PrintPlayerCard();
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Choose a category to score:");
+            Console.ResetColor();
             string chosenCategory = Console.ReadLine().ToLower().Trim();
 
             if (PlayerCard.ContainsKey(chosenCategory) && !PlayerCard[chosenCategory].HasValue)
@@ -305,11 +307,10 @@ namespace Terminal_Maxi_Yahtzee
                 {
                     if (!player.IsScoreboardComplete())
                     {
-                        Console.WriteLine($"{player.Name}'s turn.");
-                        Console.WriteLine("Press any key to start your turn...");
+                        Console.WriteLine($"{player.Name}, Press any key to start your turn...");
                         Console.ReadKey();
                         DiceThrower diceThrower = new DiceThrower();
-                        int throwCount = 1;
+                        int throwCount = 2;
 
                         for (int i = 0; i < throwCount; i++)
                         {
