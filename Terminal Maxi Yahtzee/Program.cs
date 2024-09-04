@@ -59,11 +59,15 @@ namespace Terminal_Maxi_Yahtzee
             {
                 int score = ScoreCalculator.ScoreFunctions[chosenCategory](diceValues);
                 PlayerCard[chosenCategory] = score;
-                Console.WriteLine($"Updated {chosenCategory} with {score} points.");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine($"{chosenCategory} set to {score}");
+                Console.ResetColor();
             }
             else
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Invalid category or already scored. Please try again.");
+                Console.ResetColor();
                 ChooseScoreCategory(diceValues); // Retry if invalid input
             }
         }
