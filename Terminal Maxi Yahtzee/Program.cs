@@ -156,8 +156,8 @@ namespace Terminal_Maxi_Yahtzee
             {"small straight", dice => GetSmallStraightScore(dice)},
             {"large straight", dice => GetLargeStraightScore(dice)},
             {"full straight", dice => GetFullStraightScore(dice)},
-            {"hut 2+3", dice => GetFullHouseScore(dice)},
-            {"house 3+3", dice => GetTwoThreeOfAKindScore(dice)},
+            {"hut 2+3", dice => GetHut(dice)},
+            {"house 3+3", dice => GetHouse(dice)},
             {"tower 2+4", dice => GetTowerScore(dice)},
             {"chance", dice => dice.Sum()},
             {"maxi-yahtzee", dice => GetMaxiYahtzeeScore(dice)}
@@ -184,15 +184,23 @@ namespace Terminal_Maxi_Yahtzee
 
         private static int GetTwoPairScore(int[] dice)
         {
+            // Group the dice by their values
             var pairs = dice.GroupBy(d => d)
-                            .Where(g => g.Count() >= 2)
-                            .OrderByDescending(g => g.Key)
-                            .Take(2)
-                            .Select(g => g.Key * 2)
-                            .Sum();
+                            .Where(g => g.Count() >= 2)  // Select groups that have at least two of the same value
+                            .Select(g => new { Value = g.Key, Count = g.Count() / 2 })  // Map to value and count of pairs
+                            .ToList();
 
-            return pairs == 0 || pairs / 2 == dice.Length ? 0 : pairs;
+            // Check if there are at least two distinct pairs
+            if (pairs.Count() >= 2)
+            {
+                return pairs.OrderByDescending(p => p.Value)  // Sort pairs by value, high to low
+                            .Take(2)  // Select the top two pairs
+                            .Sum(p => p.Value * 2);  // Sum twice the value of each pair
+            }
+
+            return 0;
         }
+
 
         private static int GetThreePairsScore(int[] dice)
         {
@@ -239,15 +247,25 @@ namespace Terminal_Maxi_Yahtzee
             return new HashSet<int>(dice).Count == 6 ? 21 : 0;
         }
 
-        private static int GetFullHouseScore(int[] dice)
+        private static int GetHut(int[] dice)
         {
             var groups = dice.GroupBy(d => d).ToList();
-            if (groups.Any(g => g.Count() == 2) && groups.Any(g => g.Count() == 3))
-                return groups.Sum(g => g.Key * g.Count());
+
+            // Check for the presence of exactly one triplet and one pair
+            var hasThreeOfAKind = groups.FirstOrDefault(g => g.Count() == 3);
+            var hasPair = groups.FirstOrDefault(g => g.Count() == 2);
+
+            if (hasThreeOfAKind != null && hasPair != null)
+            {
+                // Score is calculated as the sum of all dice that are part of the full house
+                return hasThreeOfAKind.Key * 3 + hasPair.Key * 2;
+            }
+
+            // If there isn't one triplet and one pair, the score is zero
             return 0;
         }
 
-        private static int GetTwoThreeOfAKindScore(int[] dice)
+        private static int GetHouse(int[] dice)
         {
             var groups = dice.GroupBy(d => d).ToList();
             return groups.Count(g => g.Count() >= 3) == 2 ? groups.Sum(g => g.Key * g.Count()) : 0;
@@ -263,7 +281,7 @@ namespace Terminal_Maxi_Yahtzee
 
         private static int GetMaxiYahtzeeScore(int[] dice)
         {
-            return dice.All(d => d == dice[0]) ? 50 : 0;
+            return dice.All(d => d == dice[0]) ? 100 : 0;
         }
     }
     internal class Program
