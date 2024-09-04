@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace Terminal_Maxi_Yahtzee
 {
@@ -39,7 +40,6 @@ namespace Terminal_Maxi_Yahtzee
 
         public void PrintPlayerCard()
         {
-            Console.WriteLine($"{Name}'s Scorecard:");
             int maxKeyLength = PlayerCard.Keys.Max(key => key.Length);
             foreach (var entry in PlayerCard)
             {
@@ -339,18 +339,19 @@ namespace Terminal_Maxi_Yahtzee
                 // Check if all players are complete
                 if (players.All(p => p.IsScoreboardComplete()))
                 {
-                    Console.WriteLine("All scoreboards are filled. Ending game.");
                     break;
                 }
             }
 
-            Console.WriteLine("Game Over! Final Scores:");
+            Console.WriteLine("Game Over! Final Scores: \n");
             foreach (Player player in players)
             {
                 int totalScore = player.CalculateTotalScore();
-                player.PrintPlayerCard();
-                Console.WriteLine($"\n{player.Name}'s Total Score: {totalScore}");
+                Console.WriteLine($"{player.Name}'s Total Score: {totalScore}");
             }
+
+            Console.WriteLine("Press 'Enter' to exit...");
+            while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
 
             Console.ReadLine();
         }
