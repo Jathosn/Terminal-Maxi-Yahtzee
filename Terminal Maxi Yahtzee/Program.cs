@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Terminal_Maxi_Yahtzee
 {
-    class PlayerCard
+    class Player
     {
 
-        static Dictionary<string, int> playerCard = new Dictionary<string, int>
+        public static Dictionary<string, int> playerCard = new Dictionary<string, int>
             {
                 { "ones", 0 },
                 { "twos", 0 },
@@ -18,6 +18,7 @@ namespace Terminal_Maxi_Yahtzee
                 { "fours", 0 },
                 { "fives", 0 },
                 { "sixes", 0 },
+                {"to bonus", 88 },
                 { "one pair", 0 },
                 { "two pairs", 0 },
                 { "three pairs", 0 },
@@ -33,11 +34,21 @@ namespace Terminal_Maxi_Yahtzee
                 { "chance", 0 },
                 { "maxi-yahtzee", 0 }
             };
-        public static void PrintPlayerCard()
+        public static void PrintPlayerCard(Dictionary<string, int> dict)
         {
-            foreach (KeyValuePair<string, int> entry in playerCard)
+            // Find the longest key in the dictionary
+            int maxKeyLength = 0;
+            foreach (var key in dict.Keys)
             {
-                Console.WriteLine("{0}: {1}", entry.Key, entry.Value);
+                if (key.Length > maxKeyLength)
+                {
+                    maxKeyLength = key.Length;
+                }
+            }
+
+            foreach (KeyValuePair<string, int> entry in dict)
+            {
+                Console.WriteLine($"{entry.Key.PadRight(maxKeyLength)}: {entry.Value}");
             }
         }
     }
@@ -45,7 +56,7 @@ namespace Terminal_Maxi_Yahtzee
     {
         static void Main(string[] args)
         {
-            PlayerCard.PrintPlayerCard();
+            Player.PrintPlayerCard(Player.playerCard);
             Console.ReadLine();
         }
     }
