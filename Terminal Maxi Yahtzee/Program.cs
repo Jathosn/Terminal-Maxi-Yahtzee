@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Terminal_Maxi_Yahtzee
 {
@@ -54,8 +55,78 @@ namespace Terminal_Maxi_Yahtzee
                 Console.WriteLine($"{entry.Key.PadRight(maxKeyLength)}: {entry.Value}");
             }
         }
-    }
+        public void ChooseScoreCategory(int diceSum)
+        {
+            PrintPlayerCard();
+            Console.WriteLine("Choose a category to score your dice sum:");
+            string chosenCategory = Console.ReadLine().ToLower().Trim();
 
+            if (PlayerCard.ContainsKey(chosenCategory) && PlayerCard[chosenCategory] == 0)
+            {
+                PlayerCard[chosenCategory] = diceSum;
+                Console.WriteLine($"Updated {chosenCategory} with {diceSum} points.");
+            }
+            else
+            {
+                Console.WriteLine("Invalid category or already scored. Please try again.");
+                ChooseScoreCategory(diceSum); // Retry if invalid input
+            }
+        }
+    }
+    class DiceThrower
+    {
+        public int[] DiceValues { get; private set; }
+        private Random random;
+
+        public DiceThrower()
+        {
+            DiceValues = new int[6];
+            random = new Random();
+            RollAllDice(); // Initialize all dice with random values
+        }
+
+        public void RollAllDice()
+        {
+            for (int i = 0; i < DiceValues.Length; i++)
+            {
+                DiceValues[i] = random.Next(1, 7);
+            }
+        }
+
+        public void RollSpecificDice(bool[] diceToKeep)
+        {
+            for (int i = 0; i < DiceValues.Length; i++)
+            {
+                if (!diceToKeep[i]) // Only reroll dice that are not kept
+                {
+                    DiceValues[i] = random.Next(1, 7);
+                }
+            }
+        }
+
+        public void DisplayDice()
+        {
+            Console.WriteLine("Current dice values:");
+            for (int i = 0; i < DiceValues.Length; i++)
+            {
+                Console.WriteLine($"Dice {i + 1}: {DiceValues[i]}");
+            }
+        }
+
+        public bool[] GetDiceToKeep()
+        {
+            bool[] diceToKeep = new bool[6];
+            Console.WriteLine("Enter 'y' to keep a die or 'n' to reroll it:");
+            for (int i = 0; i < 6; i++)
+            {
+                Console.Write($"Keep dice {i + 1} [{DiceValues[i]}]? (y/n): ");
+                char input = Console.ReadKey().KeyChar;
+                Console.WriteLine();
+                diceToKeep[i] = input == 'y' || input == 'Y';
+            }
+            return diceToKeep;
+        }
+}
     internal class Program
     {
         static void Main(string[] args)
@@ -73,8 +144,25 @@ namespace Terminal_Maxi_Yahtzee
 
             foreach (Player player in players)
             {
-                player.PrintPlayerCard();
-                Console.WriteLine(); // Add a space between players' cards for better readability.
+                Console.WriteLine($"{player.Name}'s turn to throw dice.");
+                DiceThrower diceThrower = new DiceThrower();
+                int throwCount = 3;
+
+                for (int i = 0; i < throwCount; i++)
+                {
+                    diceThrower.DisplayDice();
+                    if (i < throwCount - 1) // Allow rerolling only if it's not the last throw
+                    {
+                        bool[] diceToKeep = diceThrower.GetDiceToKeep();
+                        diceThrower.RollSpecificDice(diceToKeep);
+                    }
+                }
+
+                Console.WriteLine("Final dice values:");
+                diceThrower.DisplayDice();
+                int diceSum = diceThrower.DiceValues.Sum();
+                player.ChooseScoreCategory(diceSum);
+                Console.WriteLine();
             }
 
             Console.ReadLine();
