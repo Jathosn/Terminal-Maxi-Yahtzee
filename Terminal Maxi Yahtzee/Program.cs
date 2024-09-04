@@ -215,14 +215,18 @@ namespace Terminal_Maxi_Yahtzee
 
         private static int GetThreePairsScore(int[] dice)
         {
-            var pairs = dice.GroupBy(d => d)
-                            .Where(g => g.Count() >= 2)
-                            .OrderByDescending(g => g.Key)
-                            .Take(3)
-                            .Select(g => g.Key * 2)
-                            .Sum();
+            // Group by dice values and filter only groups that have exactly 2 of the same kind
+            var groups = dice.GroupBy(d => d)
+                             .Where(g => g.Count() == 2)
+                             .ToList();
 
-            return pairs == 0 || pairs / 2 != dice.Length ? 0 : pairs;
+            // Ensure that there are exactly three groups (pairs)
+            if (groups.Count == 3)
+            {
+                return groups.Sum(g => g.Key * 2);
+            }
+
+            return 0;
         }
 
         private static int GetOfAKindScore(int[] dice, int count)
@@ -305,7 +309,7 @@ namespace Terminal_Maxi_Yahtzee
                 {
                     Console.WriteLine($"{player.Name}'s turn to throw dice.");
                     DiceThrower diceThrower = new DiceThrower();
-                    int throwCount = 3;
+                    int throwCount = 10;
 
                     for (int i = 0; i < throwCount; i++)
                     {
