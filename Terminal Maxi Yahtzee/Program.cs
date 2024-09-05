@@ -71,6 +71,7 @@ namespace Terminal_Maxi_Yahtzee
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine($"{chosenCategory} set to {score}");
                 Console.ResetColor();
+                CheckBonusEligibility();
             }
             else
             {
@@ -88,19 +89,21 @@ namespace Terminal_Maxi_Yahtzee
             // Checks that every score has an int value
             return PlayerCard.Values.All(score => score.HasValue);
         }
-        public void CheckBonusEligibility(Player player)
+        public void CheckBonusEligibility()
         {
             int? combinedScore = 0;
-            combinedScore += player.PlayerCard["ones"];
-            combinedScore += player.PlayerCard["twos"];
-            combinedScore += player.PlayerCard["threes"];
-            combinedScore += player.PlayerCard["fours"];
-            combinedScore += player.PlayerCard["fives"];
-            combinedScore += player.PlayerCard["sixes"];
+            Console.WriteLine($"Ones: {PlayerCard["ones"]}, Twos: {PlayerCard["twos"]}, Threes: {PlayerCard["threes"]}, Fours: {PlayerCard["fours"]}, Fives: {PlayerCard["fives"]}, Sixes: {PlayerCard["sixes"]}");
+
+            combinedScore += PlayerCard["ones"] ?? 0;
+            combinedScore += PlayerCard["twos"] ?? 0;
+            combinedScore += PlayerCard["threes"] ?? 0;
+            combinedScore += PlayerCard["fours"] ?? 0;
+            combinedScore += PlayerCard["fives"] ?? 0;
+            combinedScore += PlayerCard["sixes"] ?? 0;
 
             if (combinedScore >= 84)
             {
-                player.BonusCheck = true;
+                BonusCheck = true;
             }
         }
 
@@ -541,6 +544,7 @@ namespace Terminal_Maxi_Yahtzee
                                     {
                                         decisionMade = true;
                                     }
+                                    // set statement to handle incorrect keypresses so that nothing happens
                                 }
                                 if (endTurn)
                                 {
