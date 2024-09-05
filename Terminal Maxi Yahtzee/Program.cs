@@ -393,8 +393,26 @@ namespace Terminal_Maxi_Yahtzee
             Console.Write("Welcome to Terminal Maxi Yahtzee.\n");
             Thread.Sleep(1000);
             Console.ResetColor();
-            Console.Write("Please input the number of players: ");
-            int playerCount = int.Parse(Console.ReadLine());
+            int playerCount = 0;
+
+            while (true)
+            {
+                Console.Write("Please input the number of players: ");
+                string input = Console.ReadLine();
+
+                // Try to parse the input and ensure it is a positive integer greater than zero
+                if (int.TryParse(input, out playerCount) && playerCount > 0)
+                {
+                    break;  // Valid input, exit the loop
+                }
+                else
+                {
+                    // Error handling: display a message and reprompt
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine("Invalid input. Please enter a positive integer greater than 0.");
+                    Console.ResetColor();
+                }
+            }
 
             for (int i = 1; i <= playerCount; i++)
             {
