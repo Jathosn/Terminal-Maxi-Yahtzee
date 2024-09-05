@@ -11,11 +11,13 @@ namespace Terminal_Maxi_Yahtzee
         public string Name { get; set; }
         public Dictionary<string, int?> PlayerCard { get; set; }
         public int AvailableThrows { get; set; }
+        public bool BonusCheck { get; set; }
 
         public Player(string name)
         {
             Name = name;
             AvailableThrows = 3;
+            BonusCheck = false;
             PlayerCard = new Dictionary<string, int?>
         {
             { "ones", null },
@@ -80,11 +82,34 @@ namespace Terminal_Maxi_Yahtzee
             // Checks that every score has an int value
             return PlayerCard.Values.All(score => score.HasValue);
         }
+        public void CheckBonusEligibility(Player player)
+        {
+            int? combinedScore = 0;
+            combinedScore += player.PlayerCard["ones"];
+            combinedScore += player.PlayerCard["twos"];
+            combinedScore += player.PlayerCard["threes"];
+            combinedScore += player.PlayerCard["fours"];
+            combinedScore += player.PlayerCard["fives"];
+            combinedScore += player.PlayerCard["sixes"];
+
+            if (combinedScore >= 84)
+            {
+                player.BonusCheck = true;
+            }
+        }
+
 
         public int CalculateTotalScore()
         {
-            // Sum all values in the PlayerCard dictionary that have been set (not null)
-            return PlayerCard.Values.Where(v => v.HasValue).Sum(v => v.Value);
+            int totalScore = PlayerCard.Values.Where(v => v.HasValue).Sum(v => v.Value);
+
+            // If the bonus check is true, add 100 points to the total score
+            if (BonusCheck)
+            {
+                totalScore += 100;
+            }
+
+            return totalScore;
         }
 
     }
@@ -131,7 +156,7 @@ namespace Terminal_Maxi_Yahtzee
             return string.Join(", ", DiceValues.Select((value, index) => $"{value}"));
         }
 
-        public bool[] GetDiceToKeep(int[] currentRoll)
+        public bool[] GetDiceToKeep(DiceThrower diceThrower, int[] currentRoll)
         {
             bool[] diceToKeep = new bool[currentRoll.Length]; // To track which dice to keep (true means keep)
 
@@ -151,8 +176,10 @@ namespace Terminal_Maxi_Yahtzee
                 // Validate input: Ensure all characters are digits between 1 and 6
                 if (!input.All(c => char.IsDigit(c) && c >= '1' && c <= '6'))
                 {
-                    Console.BackgroundColor = ConsoleColor.DarkRed;
                     Console.WriteLine("Invalid input. Please enter numbers between 1 and 6.");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine($"\n{diceThrower.GetDiceValuesAsString()}\n");
+                    Console.ResetColor();
                     Console.ResetColor();
                     continue; // Reprompt the player
                 }
@@ -192,6 +219,9 @@ namespace Terminal_Maxi_Yahtzee
                 {
                     Console.ForegroundColor = ConsoleColor.DarkRed;
                     Console.WriteLine("Input value does not exist. Please try again.");
+                    Console.ResetColor();
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine($"\n{diceThrower.GetDiceValuesAsString()}\n");
                     Console.ResetColor();
                     continue; // Reprompt the player
                 }
@@ -462,7 +492,7 @@ namespace Terminal_Maxi_Yahtzee
                                 }
 
                                 int[] currentRoll = diceThrower.DiceValues;       // Get the current roll
-                                bool[] diceToKeep = diceThrower.GetDiceToKeep(currentRoll); // Ask player which dice to keep
+                                bool[] diceToKeep = diceThrower.GetDiceToKeep(diceThrower, currentRoll); // Ask player which dice to keep
                                 diceThrower.RollSpecificDice(diceToKeep);
                             }
                             else
@@ -491,6 +521,7 @@ namespace Terminal_Maxi_Yahtzee
             Console.ResetColor();
             foreach (Player player in players)
             {
+
                 int totalScore = player.CalculateTotalScore();
                 Console.WriteLine($"{player.Name}'s total Score: {totalScore}");
             }
