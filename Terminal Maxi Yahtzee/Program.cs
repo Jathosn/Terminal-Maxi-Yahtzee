@@ -56,7 +56,7 @@ namespace Terminal_Maxi_Yahtzee
         {
             PrintPlayerCard();
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Choose a category to score:");
+            Console.WriteLine("Write category name to input score:");
             Console.ResetColor();
             string chosenCategory = Console.ReadLine().ToLower().Trim();
 
@@ -521,8 +521,8 @@ namespace Terminal_Maxi_Yahtzee
                             }
                         }
 
-                        Console.WriteLine("Result: \n");
                         Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine("Result:");
                         Console.WriteLine($"\n{diceThrower.GetDiceValuesAsString()}\n");
                         Console.ResetColor();
                         player.ChooseScoreCategory(diceThrower.DiceValues);
