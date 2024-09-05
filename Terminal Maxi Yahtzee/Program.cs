@@ -389,10 +389,8 @@ namespace Terminal_Maxi_Yahtzee
 
                         // Offer the player the option to skip the turn before rolling any dice
                         Console.Clear();
-                        Console.WriteLine($"It's your turn {player.Name}. Options:");
-                        Console.WriteLine($"Press 'ENTER' to throw");
-                        Console.WriteLine($"Press 'S' to view scoreboard");
-                        Console.WriteLine($"Press 'E' to end turn");
+                        Console.WriteLine($"It's your turn {player.Name}.");
+                        Console.WriteLine($"Press 'ENTER' to throw\n Press 'S' to view scoreboard \n Press 'E' to end turn");
 
                         while(!decisionMade)
                         {
@@ -405,15 +403,14 @@ namespace Terminal_Maxi_Yahtzee
                                 player.PrintPlayerCard();
 
 
-                                Console.WriteLine($"Press 'ENTER' to throw");
-                                Console.WriteLine($"Press 'E' to end turn");
+                                Console.WriteLine($"Press 'ENTER' to throw \n Press 'E' to end turn");
                                 keyPress = Console.ReadKey(true).Key;
                             }
                             if (keyPress == ConsoleKey.E)
                             {
                                 Console.Clear();
                                 player.AvailableThrows += 3;  // Save all 3 throws for the next turn
-                                Console.WriteLine($"{player.Name} skipped the turn. 3 throws have been carried over to the next turn.");
+                                Console.WriteLine($"{player.Name} skipped their turn. 3 throws saved for later turns");
                                 player.ChooseScoreCategory(new int[6] { 0, 0, 0, 0, 0, 0 });
                                 decisionMade = true;
                                 Thread.Sleep(1000);
@@ -444,9 +441,7 @@ namespace Terminal_Maxi_Yahtzee
                                 Console.WriteLine($"\n  {player.Name} has {throwsRemaining} throws remaining. \n");
                                 Console.ResetColor();
 
-                                Console.WriteLine("Press 'ENTER' to continue");
-                                Console.WriteLine($"Press 'S' to view scoreboard");
-                                Console.WriteLine("Press 'E' to end turn");
+                                Console.WriteLine($"Press 'ENTER' to continue\nPress 'S' to view scoreboard\nPress 'E' to end turn");
                                 var keyPress = Console.ReadKey(true).Key;
                                 if (keyPress == ConsoleKey.E)
                                 {
@@ -456,13 +451,13 @@ namespace Terminal_Maxi_Yahtzee
                                 }
                                 if (keyPress == ConsoleKey.S)
                                 {
+                                    Console.Clear();
                                     Console.WriteLine($"{player.Name}'s Scoreboard:");
                                     player.PrintPlayerCard();
                                     Console.ForegroundColor = ConsoleColor.White;
-                                    Console.WriteLine($"\nThrow: {diceThrower.GetDiceValuesAsString()}\n");
+                                    Console.WriteLine($"\n{diceThrower.GetDiceValuesAsString()}\n");
                                     Console.ResetColor();
-                                    Console.WriteLine($"Press 'ENTER' to continue");
-                                    Console.WriteLine($"Press 'E' to end turn");
+                                    Console.WriteLine($"Press 'ENTER' to continue\nPress 'E' to end turn");
                                     keyPress = Console.ReadKey(true).Key;
                                 }
 
