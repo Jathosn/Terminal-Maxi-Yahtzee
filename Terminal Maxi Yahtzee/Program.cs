@@ -61,7 +61,7 @@ namespace Terminal_Maxi_Yahtzee
             {
                 int score = ScoreCalculator.ScoreFunctions[chosenCategory](diceValues);
                 PlayerCard[chosenCategory] = score;
-                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine($"{chosenCategory} set to {score}");
                 Console.ResetColor();
             }
@@ -126,19 +126,77 @@ namespace Terminal_Maxi_Yahtzee
             }
         }
 
-        public bool[] GetDiceToKeep()
+        public bool[] GetDiceToKeep(int[] currentRoll)
         {
-            bool[] diceToKeep = new bool[6];
-            Console.WriteLine("Press 'Y' to keep a die or any key to reroll:");
-            for (int i = 0; i < 6; i++)
+            bool[] diceToKeep = new bool[currentRoll.Length]; // To track which dice to keep (true means keep)
+
+            while (true)
             {
-                Console.Write($"Keep dice {i + 1} [{DiceValues[i]}]? (y): ");
-                char input = Console.ReadKey().KeyChar;
-                Console.WriteLine();
-                diceToKeep[i] = input == 'y' || input == 'Y';
+                Console.WriteLine("Write the values you wish to keep. Press ENTER to continue");
+
+                string input = Console.ReadLine().Trim();
+
+                // If the input is empty, reroll all dice
+                if (string.IsNullOrEmpty(input))
+                {
+                    Console.WriteLine("Rerolling all dice...");
+                    return new bool[currentRoll.Length]; // All dice will be rerolled (none are kept)
+                }
+
+                // Validate input: Ensure all characters are digits between 1 and 6
+                if (!input.All(c => char.IsDigit(c) && c >= '1' && c <= '6'))
+                {
+                    Console.BackgroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine("Invalid input. Please enter numbers between 1 and 6.");
+                    Console.ResetColor();
+                    continue; // Reprompt the player
+                }
+
+                // Convert input to an array of integers representing dice values the player wants to keep
+                int[] valuesToKeep = input.Select(c => int.Parse(c.ToString())).ToArray();
+
+                // Copy current dice roll and track which dice have been marked as kept
+                Dictionary<int, int> diceCount = currentRoll.GroupBy(d => d).ToDictionary(g => g.Key, g => g.Count());
+
+                bool invalidKeep = false;
+
+                // For each value the player wants to keep, check if it exists in the current roll
+                foreach (int value in valuesToKeep)
+                {
+                    if (diceCount.ContainsKey(value) && diceCount[value] > 0)
+                    {
+                        // Find the first available die with this value and mark it to keep
+                        for (int i = 0; i < currentRoll.Length; i++)
+                        {
+                            if (currentRoll[i] == value && !diceToKeep[i])
+                            {
+                                diceToKeep[i] = true;
+                                diceCount[value]--; // Reduce the count of available dice of this value
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        invalidKeep = true;
+                        break;
+                    }
+                }
+
+                if (invalidKeep)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine("You tried to keep dice values that don't exist in the current roll. Please try again.");
+                    Console.ResetColor();
+                    continue; // Reprompt the player
+                }
+
+                // Return the boolean array indicating which dice to keep
+                return diceToKeep;
             }
-            return diceToKeep;
         }
+
+
     }
     class ScoreCalculator
     {
@@ -350,7 +408,8 @@ namespace Terminal_Maxi_Yahtzee
                                     break; // End the turn
                                 }
 
-                                bool[] diceToKeep = diceThrower.GetDiceToKeep();
+                                int[] currentRoll = diceThrower.DiceValues;       // Get the current roll
+                                bool[] diceToKeep = diceThrower.GetDiceToKeep(currentRoll); // Ask player which dice to keep
                                 diceThrower.RollSpecificDice(diceToKeep);
                             }
                             else
