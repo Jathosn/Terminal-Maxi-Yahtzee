@@ -54,15 +54,19 @@ namespace Terminal_Maxi_Yahtzee
         }
         public void ChooseScoreCategory(int[] diceValues)
         {
+            // Check if the player skipped their turn (diceValues is null)
+            bool turnSkipped = diceValues == null;
+
             PrintPlayerCard();
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Write category name to input score:");
+            Console.WriteLine("Write category name to input score (score will be set to 0 if no dice were rolled):");
             Console.ResetColor();
             string chosenCategory = Console.ReadLine().ToLower().Trim();
 
+            // Check if the category is valid and not already scored
             if (PlayerCard.ContainsKey(chosenCategory) && !PlayerCard[chosenCategory].HasValue)
             {
-                int score = ScoreCalculator.ScoreFunctions[chosenCategory](diceValues);
+                int score = turnSkipped ? 0 : ScoreCalculator.ScoreFunctions[chosenCategory](diceValues); // Set score to 0 if no dice were rolled
                 PlayerCard[chosenCategory] = score;
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine($"{chosenCategory} set to {score}");
@@ -76,6 +80,8 @@ namespace Terminal_Maxi_Yahtzee
                 ChooseScoreCategory(diceValues); // Retry if invalid input
             }
         }
+
+
 
         public bool IsScoreboardComplete()
         {
@@ -176,10 +182,11 @@ namespace Terminal_Maxi_Yahtzee
                 // Validate input: Ensure all characters are digits between 1 and 6
                 if (!input.All(c => char.IsDigit(c) && c >= '1' && c <= '6'))
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Invalid input. Please enter numbers between 1 and 6.");
+                    Console.ResetColor();
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine($"\n{diceThrower.GetDiceValuesAsString()}\n");
-                    Console.ResetColor();
                     Console.ResetColor();
                     continue; // Reprompt the player
                 }
@@ -217,7 +224,7 @@ namespace Terminal_Maxi_Yahtzee
 
                 if (invalidKeep)
                 {
-                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Input value does not exist. Please try again.");
                     Console.ResetColor();
                     Console.ForegroundColor = ConsoleColor.White;
@@ -395,7 +402,7 @@ namespace Terminal_Maxi_Yahtzee
             List<Player> players = new List<Player>();
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write("Welcome to Terminal Maxi Yahtzee.\n");
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
             Console.ResetColor();
             int playerCount = 0;
 
@@ -421,14 +428,14 @@ namespace Terminal_Maxi_Yahtzee
             for (int i = 1; i <= playerCount; i++)
             {
                 Console.Clear();
-                Thread.Sleep(1000);
+                //Thread.Sleep(1000);
                 Console.Write($"Enter name for player {i}: ");
                 string name = Console.ReadLine();
                 players.Add(new Player(name));
             }
             Console.Clear();
             Console.Write("Game starting...");
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
             Console.Clear();
 
             while (true)  // Keep looping until all scoreboards are complete
@@ -438,13 +445,14 @@ namespace Terminal_Maxi_Yahtzee
                     if (!player.IsScoreboardComplete())
                     {
                         bool decisionMade = false;
+                        bool turnSkipped = false; // New flag to track if the turn was skipped
 
                         // Offer the player the option to skip the turn before rolling any dice
                         Console.Clear();
                         Console.WriteLine($"It's your turn {player.Name}.");
                         Console.WriteLine($"Press 'ENTER' to throw\n Press 'S' to view scoreboard \n Press 'E' to end turn");
 
-                        while(!decisionMade)
+                        while (!decisionMade)
                         {
                             var keyPress = Console.ReadKey(true).Key;
 
@@ -454,7 +462,6 @@ namespace Terminal_Maxi_Yahtzee
                                 Console.WriteLine($"{player.Name}'s Scoreboard:");
                                 player.PrintPlayerCard();
 
-
                                 Console.WriteLine($"Press 'ENTER' to throw \n Press 'E' to end turn");
                                 keyPress = Console.ReadKey(true).Key;
                             }
@@ -463,10 +470,11 @@ namespace Terminal_Maxi_Yahtzee
                                 Console.Clear();
                                 player.AvailableThrows += 3;  // Save all 3 throws for the next turn
                                 Console.WriteLine($"{player.Name} skipped their turn. 3 throws saved for later turns");
-                                player.ChooseScoreCategory(new int[6] { 0, 0, 0, 0, 0, 0 });
+                                Console.WriteLine("You can set a score of 0 for a category.");
+                                player.ChooseScoreCategory(null);  // Pass null to indicate the player skipped the turn
                                 decisionMade = true;
-                                Thread.Sleep(1000);
-                                continue;  // Move on to the next player
+                                turnSkipped = true;  // Set flag to true to indicate the turn was skipped
+                                break;  // Exit the loop
                             }
                             else if (keyPress == ConsoleKey.Enter)
                             {
@@ -474,10 +482,15 @@ namespace Terminal_Maxi_Yahtzee
                                 decisionMade = true;
                             }
                         }
-                        {
 
+                        if (turnSkipped)
+                        {
+                            continue;  // Skip to the next player if the turn was skipped
                         }
 
+                        Console.WriteLine();
+
+                        // Dice rolling logic will only be executed if the turn wasn't skipped
                         int currentThrows = player.AvailableThrows;
                         DiceThrower diceThrower = new DiceThrower();
                         int throwCount = player.AvailableThrows;
@@ -496,7 +509,7 @@ namespace Terminal_Maxi_Yahtzee
                                 Console.WriteLine($"\u001b[38;2;255;150;0m{throwsRemaining} throws remaining\u001b[0m \n");
                                 decisionMade = false;
 
-                                while(!decisionMade)
+                                while (!decisionMade)
                                 {
                                     Console.WriteLine("Press 'ENTER' to continue");
                                     Console.WriteLine("Press 'S' to view scoreboard");
@@ -549,7 +562,7 @@ namespace Terminal_Maxi_Yahtzee
                         Console.WriteLine($"\n{diceThrower.GetDiceValuesAsString()}\n");
                         Console.ResetColor();
                         player.ChooseScoreCategory(diceThrower.DiceValues);
-                        Thread.Sleep(1000);
+                        //Thread.Sleep(1000);
 
                         Console.WriteLine();
                     }
