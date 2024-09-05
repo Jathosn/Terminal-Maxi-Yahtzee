@@ -487,9 +487,7 @@ namespace Terminal_Maxi_Yahtzee
                             int throwsRemaining = throwCount - i - 1;
                             if (throwsRemaining > 0)
                             {
-                                Console.ForegroundColor = ConsoleColor.DarkGray;
-                                Console.WriteLine($"{throwsRemaining} throws remaining. \n");
-                                Console.ResetColor();
+                                Console.WriteLine($"\u001b[38;2;255;150;0m{throwsRemaining} throws remaining\u001b[0m \n");
 
                                 Console.WriteLine($"Press 'ENTER' to continue\nPress 'S' to view scoreboard\nPress 'E' to end turn");
                                 var keyPress = Console.ReadKey(true).Key;
