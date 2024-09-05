@@ -126,6 +126,10 @@ namespace Terminal_Maxi_Yahtzee
                 Console.WriteLine($"Dice {i + 1}: {DiceValues[i]}");
             }
         }
+        public string GetDiceValuesAsString()
+        {
+            return string.Join(", ", DiceValues.Select((value, index) => $"{value}"));
+        }
 
         public bool[] GetDiceToKeep(int[] currentRoll)
         {
@@ -441,6 +445,7 @@ namespace Terminal_Maxi_Yahtzee
                                 Console.ResetColor();
 
                                 Console.WriteLine("Press 'ENTER' to continue");
+                                Console.WriteLine($"Press 'S' to view scoreboard");
                                 Console.WriteLine("Press 'E' to end turn");
                                 var keyPress = Console.ReadKey(true).Key;
                                 if (keyPress == ConsoleKey.E)
@@ -448,6 +453,17 @@ namespace Terminal_Maxi_Yahtzee
                                     player.AvailableThrows = 3 + throwsRemaining; // Add remaining throws to next turn
                                     Console.WriteLine($"You ended your turn early. {throwsRemaining} throws carried over to your next turn.\n");
                                     break; // End the turn
+                                }
+                                if (keyPress == ConsoleKey.S)
+                                {
+                                    Console.WriteLine($"{player.Name}'s Scoreboard:");
+                                    player.PrintPlayerCard();
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    Console.WriteLine($"\nThrow: {diceThrower.GetDiceValuesAsString()}\n");
+                                    Console.ResetColor();
+                                    Console.WriteLine($"Press 'ENTER' to continue");
+                                    Console.WriteLine($"Press 'E' to end turn");
+                                    keyPress = Console.ReadKey(true).Key;
                                 }
 
                                 int[] currentRoll = diceThrower.DiceValues;       // Get the current roll
