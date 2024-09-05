@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Runtime.InteropServices;
 
 namespace Terminal_Maxi_Yahtzee
@@ -354,15 +355,22 @@ namespace Terminal_Maxi_Yahtzee
         static void Main(string[] args)
         {
             List<Player> players = new List<Player>();
-            Console.Write("Enter the number of players: ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("Welcome to Terminal Maxi Yahtzee.\n");
+            Thread.Sleep(1000);
+            Console.ResetColor();
+            Console.Write("Please input the number of players: ");
             int playerCount = int.Parse(Console.ReadLine());
 
             for (int i = 1; i <= playerCount; i++)
             {
+                Thread.Sleep(1000);
                 Console.Write($"Enter name for player {i}: ");
                 string name = Console.ReadLine();
                 players.Add(new Player(name));
             }
+            Console.Write("\nGame starting...\n");
+            Thread.Sleep(1000);
 
             while (true)  // Keep looping until all scoreboards are complete
             {
@@ -370,27 +378,41 @@ namespace Terminal_Maxi_Yahtzee
                 {
                     if (!player.IsScoreboardComplete())
                     {
+                        bool decisionMade = false;
 
                         // Offer the player the option to skip the turn before rolling any dice
                         Console.WriteLine($"It's your turn {player.Name}. Options:");
                         Console.WriteLine($"Press 'ENTER' to throw");
                         Console.WriteLine($"Press 'S' to view scoreboard");
                         Console.WriteLine($"Press 'E' to end turn");
-                        var keyPress = Console.ReadKey(true).Key;
 
-                        if (keyPress == ConsoleKey.S)
+                        while(!decisionMade)
                         {
-                            Console.WriteLine($"{player.Name}'s Scoreboard:");
-                            player.PrintPlayerCard();
-                            Console.WriteLine($"Press 'ENTER' to throw");
-                            Console.WriteLine($"Press 'E' to end turn");
-                        } else if (keyPress == ConsoleKey.E)
-                        {
-                            player.AvailableThrows += 3;  // Save all 3 throws for the next turn
-                            Console.WriteLine($"{player.Name} skipped the turn. 3 throws have been carried over to the next turn.");
-                            player.ChooseScoreCategory(new int[6] { 0, 0, 0, 0, 0, 0 });
-                            continue;  // Move on to the next player
-                        } else
+                            var keyPress = Console.ReadKey(true).Key;
+
+                            if (keyPress == ConsoleKey.S)
+                            {
+                                Console.WriteLine($"{player.Name}'s Scoreboard:");
+                                player.PrintPlayerCard();
+
+
+                                Console.WriteLine($"Press 'ENTER' to throw");
+                                Console.WriteLine($"Press 'E' to end turn");
+                                keyPress = Console.ReadKey(true).Key;
+                            }
+                            if (keyPress == ConsoleKey.E)
+                            {
+                                player.AvailableThrows += 3;  // Save all 3 throws for the next turn
+                                Console.WriteLine($"{player.Name} skipped the turn. 3 throws have been carried over to the next turn.");
+                                player.ChooseScoreCategory(new int[6] { 0, 0, 0, 0, 0, 0 });
+                                decisionMade = true;
+                                continue;  // Move on to the next player
+                            }
+                            else if (keyPress == ConsoleKey.Enter)
+                            {
+                                decisionMade = true;
+                            }
+                        }
                         {
 
                         }
