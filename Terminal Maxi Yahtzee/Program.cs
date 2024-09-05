@@ -376,29 +376,26 @@ namespace Terminal_Maxi_Yahtzee
                         Console.WriteLine($"Press 'ENTER' to throw");
                         Console.WriteLine($"Press 'S' to view scoreboard");
                         Console.WriteLine($"Press 'E' to end turn");
+                        var keyPress = Console.ReadKey(true).Key;
 
-                        if (Console.ReadKey(true).Key == ConsoleKey.S)
+                        if (keyPress == ConsoleKey.S)
                         {
                             Console.WriteLine($"{player.Name}'s Scoreboard:");
                             player.PrintPlayerCard();
                             Console.WriteLine($"Press 'ENTER' to throw");
                             Console.WriteLine($"Press 'E' to end turn");
-                        }
-
-                        if (Console.ReadKey(true).Key == ConsoleKey.E)
+                        } else if (keyPress == ConsoleKey.E)
                         {
                             player.AvailableThrows += 3;  // Save all 3 throws for the next turn
                             Console.WriteLine($"{player.Name} skipped the turn. 3 throws have been carried over to the next turn.");
                             player.ChooseScoreCategory(new int[6] { 0, 0, 0, 0, 0, 0 });
                             continue;  // Move on to the next player
-                        }
-                        if (Console.ReadKey(true).Key == ConsoleKey.Enter)
+                        } else
                         {
 
                         }
 
                         int currentThrows = player.AvailableThrows;
-
                         DiceThrower diceThrower = new DiceThrower();
                         int throwCount = player.AvailableThrows;
 
