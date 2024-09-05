@@ -9,10 +9,12 @@ namespace Terminal_Maxi_Yahtzee
     {
         public string Name { get; set; }
         public Dictionary<string, int?> PlayerCard { get; set; }
+        public int AvailableThrows { get; set; }
 
         public Player(string name)
         {
             Name = name;
+            AvailableThrows = 3;
             PlayerCard = new Dictionary<string, int?>
         {
             { "ones", null },
@@ -313,18 +315,30 @@ namespace Terminal_Maxi_Yahtzee
                     {
                         Console.WriteLine($"{player.Name}, Press any key to start your turn...");
                         Console.ReadKey();
+                        int currentThrows = 3 + (player.AvailableThrows - 3);  // Start with 3 throws, plus any carried over
+
                         DiceThrower diceThrower = new DiceThrower();
-                        int throwCount = 2;
+                        int throwCount = player.AvailableThrows;
 
                         for (int i = 0; i < throwCount; i++)
                         {
-                            Console.WriteLine($"Throw {i + 1}/{throwCount}");
                             diceThrower.DisplayDice();
 
                             int throwsRemaining = throwCount - i - 1;
                             if (throwsRemaining > 0)
                             {
-                                Console.WriteLine($"You have {throwsRemaining} throws remaining.");
+                                Console.ForegroundColor = ConsoleColor.Gray;
+                                Console.WriteLine($"\n  {player.Name} has {throwsRemaining} throws remaining. \n");
+                                Console.ResetColor();
+
+                                Console.WriteLine("Press 'E' to end your turn early, or any other key to continue.");
+                                if (Console.ReadKey(true).Key == ConsoleKey.E)
+                                {
+                                    player.AvailableThrows = 3 + throwsRemaining; // Add remaining throws to next turn
+                                    Console.WriteLine($"You ended your turn early. {throwsRemaining} throws carried over to your next turn.");
+                                    break; // End the turn
+                                }
+
                                 bool[] diceToKeep = diceThrower.GetDiceToKeep();
                                 diceThrower.RollSpecificDice(diceToKeep);
                             }
@@ -337,6 +351,8 @@ namespace Terminal_Maxi_Yahtzee
                         Console.WriteLine("Final dice values:");
                         diceThrower.DisplayDice();
                         player.ChooseScoreCategory(diceThrower.DiceValues);
+
+
                         Console.WriteLine();
                     }
                 }
