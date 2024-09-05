@@ -120,7 +120,6 @@ namespace Terminal_Maxi_Yahtzee
 
         public void DisplayDice()
         {
-            Console.WriteLine("Current dice values:");
             for (int i = 0; i < DiceValues.Length; i++)
             {
                 Console.WriteLine($"Dice {i + 1}: {DiceValues[i]}");
@@ -347,7 +346,7 @@ namespace Terminal_Maxi_Yahtzee
                                 if (Console.ReadKey(true).Key == ConsoleKey.E)
                                 {
                                     player.AvailableThrows = 3 + throwsRemaining; // Add remaining throws to next turn
-                                    Console.WriteLine($"You ended your turn early. {throwsRemaining} throws carried over to your next turn.");
+                                    Console.WriteLine($"You ended your turn early. {throwsRemaining} throws carried over to your next turn.\n");
                                     break; // End the turn
                                 }
 
@@ -360,7 +359,7 @@ namespace Terminal_Maxi_Yahtzee
                             }
                         }
 
-                        Console.WriteLine("Final dice values:");
+                        Console.WriteLine("Result:");
                         diceThrower.DisplayDice();
                         player.ChooseScoreCategory(diceThrower.DiceValues);
 
