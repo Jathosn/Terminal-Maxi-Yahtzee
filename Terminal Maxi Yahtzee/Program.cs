@@ -381,6 +381,10 @@ namespace Terminal_Maxi_Yahtzee
 
         private static int GetMaxiYahtzeeScore(int[] dice)
         {
+            if (dice == null || dice.Length == 0 || dice.All(d => d == 0))
+            {
+                return 0;  // No valid roll, return 0
+            }
             return dice.All(d => d == dice[0]) ? 100 : 0;
         }
     }
