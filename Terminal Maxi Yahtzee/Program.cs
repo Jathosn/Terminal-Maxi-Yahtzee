@@ -478,6 +478,8 @@ namespace Terminal_Maxi_Yahtzee
                         DiceThrower diceThrower = new DiceThrower();
                         int throwCount = player.AvailableThrows;
 
+                        bool endTurn = false;
+
                         for (int i = 0; i < throwCount; i++)
                         {
                             Console.ForegroundColor = ConsoleColor.White;
@@ -488,25 +490,44 @@ namespace Terminal_Maxi_Yahtzee
                             if (throwsRemaining > 0)
                             {
                                 Console.WriteLine($"\u001b[38;2;255;150;0m{throwsRemaining} throws remaining\u001b[0m \n");
+                                decisionMade = false;
 
-                                Console.WriteLine($"Press 'ENTER' to continue\nPress 'S' to view scoreboard\nPress 'E' to end turn");
-                                var keyPress = Console.ReadKey(true).Key;
-                                if (keyPress == ConsoleKey.E)
+                                while(!decisionMade)
                                 {
-                                    player.AvailableThrows = 3 + throwsRemaining; // Add remaining throws to next turn
-                                    Console.WriteLine($"You ended your turn early. {throwsRemaining} throws carried over to your next turn.\n");
-                                    break; // End the turn
+                                    Console.WriteLine("Press 'ENTER' to continue");
+                                    Console.WriteLine("Press 'S' to view scoreboard");
+                                    Console.WriteLine("Press 'E' to end turn");
+
+                                    var keyPress = Console.ReadKey(true).Key;
+
+                                    if (keyPress == ConsoleKey.S)
+                                    {
+                                        // Display the scoreboard and re-prompt the player
+                                        Console.WriteLine($"{player.Name}'s Scoreboard:");
+                                        player.PrintPlayerCard();
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        Console.WriteLine($"\n{diceThrower.GetDiceValuesAsString()}\n");
+                                        Console.ResetColor();
+                                        Console.WriteLine();
+                                    }
+                                    else if (keyPress == ConsoleKey.E)
+                                    {
+                                        // End the player's turn and add remaining throws to next turn
+                                        player.AvailableThrows = 3 + throwsRemaining;
+                                        Console.WriteLine($"You ended your turn early. {throwsRemaining} throws carried over to your next turn.\n");
+
+                                        decisionMade = true;
+                                        endTurn = true;  // Set flag to true to indicate turn end
+                                        break;  // Exit the loop
+                                    }
+                                    else if (keyPress == ConsoleKey.Enter)
+                                    {
+                                        decisionMade = true;
+                                    }
                                 }
-                                if (keyPress == ConsoleKey.S)
+                                if (endTurn)
                                 {
-                                    Console.Clear();
-                                    Console.WriteLine($"{player.Name}'s Scoreboard:");
-                                    player.PrintPlayerCard();
-                                    Console.ForegroundColor = ConsoleColor.White;
-                                    Console.WriteLine($"\n{diceThrower.GetDiceValuesAsString()}\n");
-                                    Console.ResetColor();
-                                    Console.WriteLine($"Press 'ENTER' to continue\nPress 'E' to end turn");
-                                    keyPress = Console.ReadKey(true).Key;
+                                    break;
                                 }
 
                                 int[] currentRoll = diceThrower.DiceValues;       // Get the current roll
