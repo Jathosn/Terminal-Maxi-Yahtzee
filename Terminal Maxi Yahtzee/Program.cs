@@ -136,7 +136,7 @@ namespace Terminal_Maxi_Yahtzee
                 Console.WriteLine("Write the values you wish to keep. Press ENTER to continue");
 
                 string input = Console.ReadLine().Trim();
-
+                Console.Clear();
                 // If the input is empty, reroll all dice
                 if (string.IsNullOrEmpty(input))
                 {
@@ -364,13 +364,16 @@ namespace Terminal_Maxi_Yahtzee
 
             for (int i = 1; i <= playerCount; i++)
             {
+                Console.Clear();
                 Thread.Sleep(1000);
                 Console.Write($"Enter name for player {i}: ");
                 string name = Console.ReadLine();
                 players.Add(new Player(name));
             }
-            Console.Write("\nGame starting...\n");
+            Console.Clear();
+            Console.Write("Game starting...");
             Thread.Sleep(1000);
+            Console.Clear();
 
             while (true)  // Keep looping until all scoreboards are complete
             {
@@ -381,6 +384,7 @@ namespace Terminal_Maxi_Yahtzee
                         bool decisionMade = false;
 
                         // Offer the player the option to skip the turn before rolling any dice
+                        Console.Clear();
                         Console.WriteLine($"It's your turn {player.Name}. Options:");
                         Console.WriteLine($"Press 'ENTER' to throw");
                         Console.WriteLine($"Press 'S' to view scoreboard");
@@ -392,6 +396,7 @@ namespace Terminal_Maxi_Yahtzee
 
                             if (keyPress == ConsoleKey.S)
                             {
+                                Console.Clear();
                                 Console.WriteLine($"{player.Name}'s Scoreboard:");
                                 player.PrintPlayerCard();
 
@@ -402,6 +407,7 @@ namespace Terminal_Maxi_Yahtzee
                             }
                             if (keyPress == ConsoleKey.E)
                             {
+                                Console.Clear();
                                 player.AvailableThrows += 3;  // Save all 3 throws for the next turn
                                 Console.WriteLine($"{player.Name} skipped the turn. 3 throws have been carried over to the next turn.");
                                 player.ChooseScoreCategory(new int[6] { 0, 0, 0, 0, 0, 0 });
@@ -410,6 +416,7 @@ namespace Terminal_Maxi_Yahtzee
                             }
                             else if (keyPress == ConsoleKey.Enter)
                             {
+                                Console.Clear();
                                 decisionMade = true;
                             }
                         }
@@ -451,7 +458,7 @@ namespace Terminal_Maxi_Yahtzee
                             }
                         }
 
-                        Console.WriteLine("Result:");
+                        Console.WriteLine("Result: \n");
                         diceThrower.DisplayDice();
                         player.ChooseScoreCategory(diceThrower.DiceValues);
 
