@@ -12,6 +12,29 @@ namespace Terminal_Maxi_Yahtzee
         public Dictionary<string, int?> PlayerCard { get; set; }
         public int AvailableThrows { get; set; }
         public bool BonusCheck { get; set; }
+        private static readonly Dictionary<string, string> CategoryShortcuts = new Dictionary<string, string>
+    {
+        { "on", "ones" },
+        { "tw", "twos" },
+        { "th", "threes" },
+        { "fo", "fours" },
+        { "fi", "fives" },
+        { "si", "sixes" },
+        { "op", "one pair" },
+        { "tp", "two pairs" },
+        { "thp", "three pairs" },
+        { "3", "3 same" },
+        { "4", "4 same" },
+        { "5", "5 same" },
+        { "ss", "small straight" },
+        { "ls", "large straight" },
+        { "fs", "full straight" },
+        { "hu", "hut 2+3" },
+        { "ho", "house 3+3" },
+        { "to", "tower 2+4" },
+        { "ch", "chance" },
+        { "ma", "maxi-yahtzee" }
+    };
 
         public Player(string name)
         {
@@ -61,15 +84,20 @@ namespace Terminal_Maxi_Yahtzee
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Write category name to input score (score will be set to 0 if no dice were rolled):");
             Console.ResetColor();
-            string chosenCategory = Console.ReadLine().ToLower().Trim();
+            string inputCategory = Console.ReadLine().ToLower().Trim();
+
+            if (CategoryShortcuts.ContainsKey(inputCategory))
+            {
+                inputCategory = CategoryShortcuts[inputCategory];
+            }
 
             // Check if the category is valid and not already scored
-            if (PlayerCard.ContainsKey(chosenCategory) && !PlayerCard[chosenCategory].HasValue)
+            if (PlayerCard.ContainsKey(inputCategory) && !PlayerCard[inputCategory].HasValue)
             {
-                int score = turnSkipped ? 0 : ScoreCalculator.ScoreFunctions[chosenCategory](diceValues); // Set score to 0 if no dice were rolled
-                PlayerCard[chosenCategory] = score;
+                int score = turnSkipped ? 0 : ScoreCalculator.ScoreFunctions[inputCategory](diceValues); // Set score to 0 if no dice were rolled
+                PlayerCard[inputCategory] = score;
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine($"{chosenCategory} set to {score}");
+                Console.WriteLine($"{inputCategory} set to {score}");
                 Console.ResetColor();
                 CheckBonusEligibility();
             }
@@ -92,7 +120,6 @@ namespace Terminal_Maxi_Yahtzee
         public void CheckBonusEligibility()
         {
             int? combinedScore = 0;
-            Console.WriteLine($"Ones: {PlayerCard["ones"]}, Twos: {PlayerCard["twos"]}, Threes: {PlayerCard["threes"]}, Fours: {PlayerCard["fours"]}, Fives: {PlayerCard["fives"]}, Sixes: {PlayerCard["sixes"]}");
 
             combinedScore += PlayerCard["ones"] ?? 0;
             combinedScore += PlayerCard["twos"] ?? 0;
