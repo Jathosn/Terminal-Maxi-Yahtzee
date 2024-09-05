@@ -130,10 +130,10 @@ namespace Terminal_Maxi_Yahtzee
         public bool[] GetDiceToKeep()
         {
             bool[] diceToKeep = new bool[6];
-            Console.WriteLine("Enter 'y' to keep a die or 'n' to reroll it:");
+            Console.WriteLine("Press 'Y' to keep a die or any key to reroll:");
             for (int i = 0; i < 6; i++)
             {
-                Console.Write($"Keep dice {i + 1} [{DiceValues[i]}]? (y/n): ");
+                Console.Write($"Keep dice {i + 1} [{DiceValues[i]}]? (y): ");
                 char input = Console.ReadKey().KeyChar;
                 Console.WriteLine();
                 diceToKeep[i] = input == 'y' || input == 'Y';
@@ -313,8 +313,19 @@ namespace Terminal_Maxi_Yahtzee
                 {
                     if (!player.IsScoreboardComplete())
                     {
-                        Console.WriteLine($"{player.Name}, Press any key to start your turn...");
-                        Console.ReadKey();
+
+                        // Offer the player the option to skip the turn before rolling any dice
+                        Console.WriteLine($"It's your turn {player.Name}. Options:");
+                        Console.WriteLine($"Press 'T' to throw");
+                        Console.WriteLine($"Press 'E' to end turn");
+
+                        if (Console.ReadKey(true).Key == ConsoleKey.E)
+                        {
+                            player.AvailableThrows += 3;  // Save all 3 throws for the next turn
+                            Console.WriteLine($"{player.Name} skipped the turn. 3 throws have been carried over to the next turn.");
+                            player.ChooseScoreCategory(new int[6] { 0, 0, 0, 0, 0, 0 });
+                            continue;  // Move on to the next player
+                        }
                         int currentThrows = 3 + (player.AvailableThrows - 3);  // Start with 3 throws, plus any carried over
 
                         DiceThrower diceThrower = new DiceThrower();
@@ -331,7 +342,8 @@ namespace Terminal_Maxi_Yahtzee
                                 Console.WriteLine($"\n  {player.Name} has {throwsRemaining} throws remaining. \n");
                                 Console.ResetColor();
 
-                                Console.WriteLine("Press 'E' to end your turn early, or any other key to continue.");
+                                Console.WriteLine("Press 'T' to continue");
+                                Console.WriteLine("Press 'E' to end turn");
                                 if (Console.ReadKey(true).Key == ConsoleKey.E)
                                 {
                                     player.AvailableThrows = 3 + throwsRemaining; // Add remaining throws to next turn
