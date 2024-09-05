@@ -103,6 +103,7 @@ namespace Terminal_Maxi_Yahtzee
             }
             else
             {
+                Console.Clear();
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Invalid category or already scored. Please try again.");
                 Console.ResetColor();
@@ -210,6 +211,8 @@ namespace Terminal_Maxi_Yahtzee
 
             while (true)
             {
+                Console.Clear();
+                Console.WriteLine($"\n{diceThrower.GetDiceValuesAsString()}\n");
                 Console.WriteLine("Write the values you wish to keep. Press ENTER to continue");
 
                 string input = Console.ReadLine().Trim();
@@ -224,6 +227,7 @@ namespace Terminal_Maxi_Yahtzee
                 // Validate input: Ensure all characters are digits between 1 and 6
                 if (!input.All(c => char.IsDigit(c) && c >= '1' && c <= '6'))
                 {
+                    Console.Clear();
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Invalid input. Please enter numbers between 1 and 6.");
                     Console.ResetColor();
@@ -509,6 +513,7 @@ namespace Terminal_Maxi_Yahtzee
                             }
                             else if (keyPress == ConsoleKey.H)
                             {
+                                Console.Clear();
                                 // Display shorthand notations when 'H' is pressed
                                 player.DisplayShorthandNotations();
                                 Console.WriteLine($"Press 'ENTER' to throw \n Press 'E' to end turn \n Press 'H' to view shorthand notations");
@@ -568,6 +573,7 @@ namespace Terminal_Maxi_Yahtzee
 
                                     if (keyPress == ConsoleKey.S)
                                     {
+                                        Console.Clear();
                                         // Display the scoreboard and re-prompt the player
                                         Console.WriteLine($"{player.Name}'s Scoreboard:");
                                         player.PrintPlayerCard();
@@ -578,6 +584,7 @@ namespace Terminal_Maxi_Yahtzee
                                     }
                                     else if (keyPress == ConsoleKey.H)
                                     {
+                                        Console.Clear();
                                         // Display shorthand notations when 'H' is pressed
                                         player.DisplayShorthandNotations();
                                         Console.WriteLine($"\n{diceThrower.GetDiceValuesAsString()}\n");
@@ -585,6 +592,7 @@ namespace Terminal_Maxi_Yahtzee
                                     }
                                     else if (keyPress == ConsoleKey.E)
                                     {
+                                        Console.Clear();
                                         // End the player's turn and add remaining throws to next turn
                                         player.AvailableThrows = 3 + throwsRemaining;
                                         Console.WriteLine($"You ended your turn early. {throwsRemaining} throws carried over to your next turn.\n");
