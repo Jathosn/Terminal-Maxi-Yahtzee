@@ -412,6 +412,7 @@ namespace Terminal_Maxi_Yahtzee
                                 Console.WriteLine($"{player.Name} skipped the turn. 3 throws have been carried over to the next turn.");
                                 player.ChooseScoreCategory(new int[6] { 0, 0, 0, 0, 0, 0 });
                                 decisionMade = true;
+                                Thread.Sleep(1000);
                                 continue;  // Move on to the next player
                             }
                             else if (keyPress == ConsoleKey.Enter)
@@ -441,7 +442,8 @@ namespace Terminal_Maxi_Yahtzee
 
                                 Console.WriteLine("Press 'ENTER' to continue");
                                 Console.WriteLine("Press 'E' to end turn");
-                                if (Console.ReadKey(true).Key == ConsoleKey.E)
+                                var keyPress = Console.ReadKey(true).Key;
+                                if (keyPress == ConsoleKey.E)
                                 {
                                     player.AvailableThrows = 3 + throwsRemaining; // Add remaining throws to next turn
                                     Console.WriteLine($"You ended your turn early. {throwsRemaining} throws carried over to your next turn.\n");
@@ -461,7 +463,7 @@ namespace Terminal_Maxi_Yahtzee
                         Console.WriteLine("Result: \n");
                         diceThrower.DisplayDice();
                         player.ChooseScoreCategory(diceThrower.DiceValues);
-
+                        Thread.Sleep(1000);
 
                         Console.WriteLine();
                     }
