@@ -480,13 +480,15 @@ namespace Terminal_Maxi_Yahtzee
 
                         for (int i = 0; i < throwCount; i++)
                         {
-                            diceThrower.DisplayDice();
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.WriteLine($"{diceThrower.GetDiceValuesAsString()}\n");
+                            Console.ResetColor();
 
                             int throwsRemaining = throwCount - i - 1;
                             if (throwsRemaining > 0)
                             {
-                                Console.ForegroundColor = ConsoleColor.Gray;
-                                Console.WriteLine($"\n  {player.Name} has {throwsRemaining} throws remaining. \n");
+                                Console.ForegroundColor = ConsoleColor.DarkGray;
+                                Console.WriteLine($"{throwsRemaining} throws remaining. \n");
                                 Console.ResetColor();
 
                                 Console.WriteLine($"Press 'ENTER' to continue\nPress 'S' to view scoreboard\nPress 'E' to end turn");
@@ -520,7 +522,9 @@ namespace Terminal_Maxi_Yahtzee
                         }
 
                         Console.WriteLine("Result: \n");
-                        diceThrower.DisplayDice();
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine($"\n{diceThrower.GetDiceValuesAsString()}\n");
+                        Console.ResetColor();
                         player.ChooseScoreCategory(diceThrower.DiceValues);
                         Thread.Sleep(1000);
 
