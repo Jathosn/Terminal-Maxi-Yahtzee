@@ -19,24 +19,24 @@ namespace Terminal_Maxi_Yahtzee
         {
             { "ones", null },
             { "twos", null },
-            { "threes", null },
-            { "fours", null },
-            { "fives", null },
-            { "sixes", null },
-            { "one pair", null },
-            { "two pairs", null },
-            { "three pairs", null },
-            { "3 same", null },
-            { "4 same", null },
-            { "5 same", null },
-            { "small straight", null },
-            { "large straight", null },
-            { "full straight", null },
-            { "hut 2+3", null },
-            { "house 3+3", null },
-            { "tower 2+4", null },
-            { "chance", null },
-            { "maxi-yahtzee", null }
+            //{ "threes", null },
+            //{ "fours", null },
+            //{ "fives", null },
+            //{ "sixes", null },
+            //{ "one pair", null },
+            //{ "two pairs", null },
+            //{ "three pairs", null },
+            //{ "3 same", null },
+            //{ "4 same", null },
+            //{ "5 same", null },
+            //{ "small straight", null },
+            //{ "large straight", null },
+            //{ "full straight", null },
+            //{ "hut 2+3", null },
+            //{ "house 3+3", null },
+            //{ "tower 2+4", null },
+            //{ "chance", null },
+            //{ "maxi-yahtzee", null }
         };
         }
 
@@ -208,24 +208,24 @@ namespace Terminal_Maxi_Yahtzee
         {
             {"ones", dice => dice.Where(d => d == 1).Sum(d => 1)},
             {"twos", dice => dice.Where(d => d == 2).Sum(d => 2)},
-            {"threes", dice => dice.Where(d => d == 3).Sum(d => 3)},
-            {"fours", dice => dice.Where(d => d == 4).Sum(d => 4)},
-            {"fives", dice => dice.Where(d => d == 5).Sum(d => 5)},
-            {"sixes", dice => dice.Where(d => d == 6).Sum(d => 6)},
-            {"one pair", dice => GetHighestPairScore(dice)},
-            {"two pairs", dice => GetTwoPairScore(dice)},
-            {"three pairs", dice => GetThreePairsScore(dice)},
-            {"3 same", dice => GetOfAKindScore(dice, 3)},
-            {"4 same", dice => GetOfAKindScore(dice, 4)},
-            {"5 same", dice => GetOfAKindScore(dice, 5)},
-            {"small straight", dice => GetSmallStraightScore(dice)},
-            {"large straight", dice => GetLargeStraightScore(dice)},
-            {"full straight", dice => GetFullStraightScore(dice)},
-            {"hut 2+3", dice => GetHut(dice)},
-            {"house 3+3", dice => GetHouse(dice)},
-            {"tower 2+4", dice => GetTowerScore(dice)},
-            {"chance", dice => dice.Sum()},
-            {"maxi-yahtzee", dice => GetMaxiYahtzeeScore(dice)}
+            //{"threes", dice => dice.Where(d => d == 3).Sum(d => 3)},
+            //{"fours", dice => dice.Where(d => d == 4).Sum(d => 4)},
+            //{"fives", dice => dice.Where(d => d == 5).Sum(d => 5)},
+            //{"sixes", dice => dice.Where(d => d == 6).Sum(d => 6)},
+            //{"one pair", dice => GetHighestPairScore(dice)},
+            //{"two pairs", dice => GetTwoPairScore(dice)},
+            //{"three pairs", dice => GetThreePairsScore(dice)},
+            //{"3 same", dice => GetOfAKindScore(dice, 3)},
+            //{"4 same", dice => GetOfAKindScore(dice, 4)},
+            //{"5 same", dice => GetOfAKindScore(dice, 5)},
+            //{"small straight", dice => GetSmallStraightScore(dice)},
+            //{"large straight", dice => GetLargeStraightScore(dice)},
+            //{"full straight", dice => GetFullStraightScore(dice)},
+            //{"hut 2+3", dice => GetHut(dice)},
+            //{"house 3+3", dice => GetHouse(dice)},
+            //{"tower 2+4", dice => GetTowerScore(dice)},
+            //{"chance", dice => dice.Sum()},
+            //{"maxi-yahtzee", dice => GetMaxiYahtzeeScore(dice)}
         };
         }
 
@@ -392,7 +392,12 @@ namespace Terminal_Maxi_Yahtzee
                             player.ChooseScoreCategory(new int[6] { 0, 0, 0, 0, 0, 0 });
                             continue;  // Move on to the next player
                         }
-                        int currentThrows = 3 + (player.AvailableThrows - 3);  // Start with 3 throws, plus any carried over
+                        if (Console.ReadKey(true).Key == ConsoleKey.Enter)
+                        {
+
+                        }
+
+                        int currentThrows = player.AvailableThrows;
 
                         DiceThrower diceThrower = new DiceThrower();
                         int throwCount = player.AvailableThrows;
