@@ -497,7 +497,6 @@ namespace Terminal_Maxi_Yahtzee
                         Console.Clear();
                         Console.WriteLine($"It's your turn {player.Name}.");
                         Console.WriteLine($"Press 'ENTER' to throw\n Press 'S' to view scoreboard \n Press 'E' to end turn \n Press 'H' to view shorthand notations");
-
                         while (!decisionMade)
                         {
                             var keyPress = Console.ReadKey(true).Key;
@@ -507,16 +506,16 @@ namespace Terminal_Maxi_Yahtzee
                                 Console.Clear();
                                 Console.WriteLine($"{player.Name}'s Scoreboard:");
                                 player.PrintPlayerCard();
+                                Console.WriteLine();
 
-                                Console.WriteLine($"Press 'ENTER' to throw \n Press 'E' to end turn");
-                                keyPress = Console.ReadKey(true).Key;
+                                Console.WriteLine($"Press 'ENTER' to throw\n Press 'S' to view scoreboard \n Press 'E' to end turn \n Press 'H' to view shorthand notations");
                             }
                             else if (keyPress == ConsoleKey.H)
                             {
                                 Console.Clear();
                                 // Display shorthand notations when 'H' is pressed
                                 player.DisplayShorthandNotations();
-                                Console.WriteLine($"Press 'ENTER' to throw \n Press 'E' to end turn \n Press 'H' to view shorthand notations");
+                                Console.WriteLine($"Press 'ENTER' to throw\n Press 'S' to view scoreboard \n Press 'E' to end turn \n Press 'H' to view shorthand notations");
                             }
                             else if (keyPress == ConsoleKey.E)
                             {
@@ -527,7 +526,7 @@ namespace Terminal_Maxi_Yahtzee
                                 player.ChooseScoreCategory(null);  // Pass null to indicate the player skipped the turn
                                 decisionMade = true;
                                 turnSkipped = true;  // Set flag to true to indicate the turn was skipped
-                                break;  // Exit the loop
+                                //break;  // Exit the loop
                             }
                             else if (keyPress == ConsoleKey.Enter)
                             {
