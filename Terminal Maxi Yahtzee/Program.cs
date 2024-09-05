@@ -114,7 +114,7 @@ namespace Terminal_Maxi_Yahtzee
         public void DisplayShorthandNotations()
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("\nShorthand Notations:");
+            Console.WriteLine("Shorthand Notations:");
             foreach (var entry in CategoryShortcuts)
             {
                 Console.WriteLine($"{entry.Key} => {entry.Value}");
@@ -578,7 +578,7 @@ namespace Terminal_Maxi_Yahtzee
                                         Console.WriteLine($"{player.Name}'s Scoreboard:");
                                         player.PrintPlayerCard();
                                         Console.ForegroundColor = ConsoleColor.White;
-                                        Console.WriteLine($"\n{diceThrower.GetDiceValuesAsString()}\n");
+                                        Console.WriteLine($"\n{diceThrower.GetDiceValuesAsString()}");
                                         Console.ResetColor();
                                         Console.WriteLine();
                                     }
@@ -587,7 +587,7 @@ namespace Terminal_Maxi_Yahtzee
                                         Console.Clear();
                                         // Display shorthand notations when 'H' is pressed
                                         player.DisplayShorthandNotations();
-                                        Console.WriteLine($"\n{diceThrower.GetDiceValuesAsString()}\n");
+                                        Console.WriteLine($"{diceThrower.GetDiceValuesAsString()}");
                                         Console.WriteLine();
                                     }
                                     else if (keyPress == ConsoleKey.E)
