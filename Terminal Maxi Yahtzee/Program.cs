@@ -563,7 +563,7 @@ namespace Terminal_Maxi_Yahtzee
                                 decisionMade = false;
                                 Console.WriteLine("Press 'ENTER' to continue");
                                 Console.WriteLine("Press 'S' to view scoreboard");
-                                Console.WriteLine("Press 'E' to end turshn");
+                                Console.WriteLine("Press 'E' to end turn");
                                 Console.WriteLine("Press 'H' to view shorthand notations");
                                 while (!decisionMade)
                                 {
