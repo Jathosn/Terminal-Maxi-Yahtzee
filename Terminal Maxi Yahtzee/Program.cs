@@ -645,8 +645,9 @@ namespace Terminal_Maxi_Yahtzee
                     break;
                 }
             }
+            Console.Clear();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("Game Over! Final Scores: \n");
+            Console.WriteLine("Game Over. Final Score: \n");
             Console.ResetColor();
             foreach (Player player in players)
             {
@@ -655,10 +656,9 @@ namespace Terminal_Maxi_Yahtzee
                 Console.WriteLine($"{player.Name}'s total Score: {totalScore}");
             }
 
-            Console.WriteLine("\n Press 'Enter' to exit...");
-            while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
-
-            Console.ReadLine();
+            while (true)
+            {
+            }
         }
     }
 }
