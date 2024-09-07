@@ -543,8 +543,6 @@ namespace Terminal_Maxi_Yahtzee
                             continue;  // Skip to the next player if the turn was skipped
                         }
 
-                        Console.WriteLine();
-
                         // Dice rolling logic will only be executed if the turn wasn't skipped
                         int currentThrows = player.AvailableThrows;
                         DiceThrower diceThrower = new DiceThrower();
