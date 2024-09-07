@@ -115,7 +115,6 @@ namespace Terminal_Maxi_Yahtzee
         public void DisplayShorthandNotations()
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("Shorthand Notations:");
             foreach (var entry in CategoryShortcuts)
             {
                 Console.WriteLine($"{entry.Key} => {entry.Value}");
@@ -535,6 +534,7 @@ namespace Terminal_Maxi_Yahtzee
                                 decisionMade = true;
                             }
                         }
+                        Console.Clear();
 
                         if (turnSkipped)
                         {
@@ -573,7 +573,6 @@ namespace Terminal_Maxi_Yahtzee
                                     {
                                         Console.Clear();
                                         // Display the scoreboard and re-prompt the player
-                                        Console.WriteLine($"{player.Name}'s Scoreboard:");
                                         player.PrintPlayerCard();
                                         Console.ForegroundColor = ConsoleColor.White;
                                         Console.WriteLine($"\n{diceThrower.GetDiceValuesAsString()}\n");
