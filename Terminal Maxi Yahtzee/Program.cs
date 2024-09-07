@@ -82,7 +82,7 @@ namespace Terminal_Maxi_Yahtzee
 
             PrintPlayerCard();
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Write category name to input score (score will be set to 0 if no dice were rolled):");
+            Console.WriteLine("\nEnter category name to set score and end your turn");
             Console.ResetColor();
             string inputCategory = Console.ReadLine().ToLower().Trim();
 
@@ -525,8 +525,7 @@ namespace Terminal_Maxi_Yahtzee
                             {
                                 Console.Clear();
                                 player.AvailableThrows += 3;  // Save all 3 throws for the next turn
-                                Console.WriteLine($"{player.Name} skipped their turn. 3 throws saved for later turns");
-                                Console.WriteLine("You can set a score of 0 for a category.");
+                                Console.WriteLine($"{player.Name} skipped their turn. 3 throws saved for later turns\n");
                                 player.ChooseScoreCategory(null);  // Pass null to indicate the player skipped the turn
                                 decisionMade = true;
                                 turnSkipped = true;  // Set flag to true to indicate the turn was skipped
