@@ -624,6 +624,7 @@ namespace Terminal_Maxi_Yahtzee
                             }
                             else
                             {
+                                Console.Clear();
                                 Console.WriteLine("No throws remaining.");
                             }
                         }
