@@ -79,7 +79,7 @@ namespace Terminal_Maxi_Yahtzee
             bool turnSkipped = diceValues == null;
 
             PrintPlayerCard();
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("\nTurn ended: Enter category\n");
             Console.ResetColor();
             string inputCategory = Console.ReadLine().ToLower().Trim();
@@ -489,8 +489,9 @@ namespace Terminal_Maxi_Yahtzee
 
                         // Offer the player the option to skip the turn before rolling any dice
                         Console.Clear();
+                        Console.WriteLine($"It's your turn {player.Name}\n");
                         player.PrintPlayerCard();
-                        Console.WriteLine($"\u001b[38;2;255;150;0m\nYou have {player.AvailableThrows} throw(s) remaining.\u001b[0m \n");
+                        Console.WriteLine($"\u001b[38;2;255;150;0m\nYou have {player.AvailableThrows} throw(s) available\u001b[0m \n");
                         Console.WriteLine($"Press 'ENTER' to throw\nPress 'S' to view scoreboard \nPress 'E' to end turn \nPress 'H' to view shorthand notations");
                         while (!decisionMade)
                         {
@@ -552,7 +553,7 @@ namespace Terminal_Maxi_Yahtzee
                             int throwsRemaining = throwCount - i - 1;
                             if (throwsRemaining > 0)
                             {
-                                Console.WriteLine($"\u001b[38;2;255;150;0mYou have {throwsRemaining} throw(s) remaining\u001b[0m \n");
+                                Console.WriteLine($"\u001b[38;2;255;150;0mYou have {throwsRemaining} throw(s) remaining, {player.Name}\u001b[0m \n");
                                 decisionMade = false;
                                 Console.WriteLine("Press 'ENTER' to continue");
                                 Console.WriteLine("Press 'S' to view scoreboard");
@@ -570,7 +571,7 @@ namespace Terminal_Maxi_Yahtzee
                                         player.PrintPlayerCard();
                                         Console.ForegroundColor = ConsoleColor.White;
                                         Console.WriteLine($"\n{diceThrower.GetDiceValuesAsString()}\n");
-                                        Console.WriteLine($"\u001b[38;2;255;150;0mYou have {throwsRemaining} throw(s) remaining\u001b[0m \n");
+                                        Console.WriteLine($"\u001b[38;2;255;150;0mYou have {throwsRemaining} throw(s) remaining, {player.Name} \u001b[0m \n");
                                         Console.WriteLine($"Press 'ENTER' to throw\nPress 'S' to view scoreboard \nPress 'E' to end turn \nPress 'H' to view shorthand notations");
                                     }
                                     else if (keyPress == ConsoleKey.H)
@@ -580,7 +581,7 @@ namespace Terminal_Maxi_Yahtzee
                                         player.DisplayShorthandNotations();
                                         Console.ForegroundColor = ConsoleColor.White;
                                         Console.WriteLine($"{diceThrower.GetDiceValuesAsString()}\n");
-                                        Console.WriteLine($"\u001b[38;2;255;150;0mYou have {throwsRemaining} throw(s) remaining\u001b[0m \n");
+                                        Console.WriteLine($"\u001b[38;2;255;150;0mYou have {throwsRemaining} throw(s) remaining, {player.Name}\u001b[0m \n");
                                         Console.WriteLine($"Press 'ENTER' to throw\nPress 'S' to view scoreboard \nPress 'E' to end turn \nPress 'H' to view shorthand notations");
 
                                     }
