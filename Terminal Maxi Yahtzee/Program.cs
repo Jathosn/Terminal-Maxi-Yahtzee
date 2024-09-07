@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Runtime.InteropServices;
 
 namespace Terminal_Maxi_Yahtzee
 {
@@ -157,7 +155,6 @@ namespace Terminal_Maxi_Yahtzee
             {
                 totalScore += 100;
             }
-
             return totalScore;
         }
 
@@ -448,7 +445,6 @@ namespace Terminal_Maxi_Yahtzee
             List<Player> players = new List<Player>();
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write("Welcome to Terminal Maxi Yahtzee.\n");
-            //Thread.Sleep(1000);
             Console.ResetColor();
             int playerCount = 0;
 
@@ -474,14 +470,12 @@ namespace Terminal_Maxi_Yahtzee
             for (int i = 1; i <= playerCount; i++)
             {
                 Console.Clear();
-                //Thread.Sleep(1000);
                 Console.Write($"Enter name for player {i}: ");
                 string name = Console.ReadLine();
                 players.Add(new Player(name));
             }
             Console.Clear();
             Console.Write("Game starting...");
-            //Thread.Sleep(1000);
             Console.Clear();
 
             while (true)  // Keep looping until all scoreboards are complete
@@ -632,7 +626,6 @@ namespace Terminal_Maxi_Yahtzee
                         Console.WriteLine($"\n{diceThrower.GetDiceValuesAsString()}\n");
                         Console.ResetColor();
                         player.ChooseScoreCategory(diceThrower.DiceValues);
-                        //Thread.Sleep(1000);
 
                         Console.WriteLine();
                     }
