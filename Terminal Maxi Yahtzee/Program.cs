@@ -496,7 +496,10 @@ namespace Terminal_Maxi_Yahtzee
                         // Offer the player the option to skip the turn before rolling any dice
                         Console.Clear();
                         player.PrintPlayerCard();
-                        Console.WriteLine($"\n It's your turn {player.Name}.");
+
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine($"\nIt's your turn {player.Name}.\n");
+                        Console.ResetColor();
                         Console.WriteLine($"Press 'ENTER' to throw\nPress 'S' to view scoreboard \nPress 'E' to end turn \nPress 'H' to view shorthand notations");
                         while (!decisionMade)
                         {
