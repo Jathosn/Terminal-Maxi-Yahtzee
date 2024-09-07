@@ -212,8 +212,8 @@ namespace Terminal_Maxi_Yahtzee
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine($"\n{diceThrower.GetDiceValuesAsString()}\n");
-                Console.WriteLine("Write the values you wish to keep. Press ENTER to continue");
+                Console.WriteLine($"{diceThrower.GetDiceValuesAsString()}\n");
+                Console.WriteLine("Write the values (1-6) you wish to keep. Press ENTER to continue");
 
                 string input = Console.ReadLine().Trim();
                 Console.Clear();
@@ -497,7 +497,7 @@ namespace Terminal_Maxi_Yahtzee
                         Console.Clear();
                         player.PrintPlayerCard();
                         Console.WriteLine($"\n It's your turn {player.Name}.");
-                        Console.WriteLine($"Press 'ENTER' to throw\n Press 'S' to view scoreboard \n Press 'E' to end turn \n Press 'H' to view shorthand notations");
+                        Console.WriteLine($"Press 'ENTER' to throw\nPress 'S' to view scoreboard \nPress 'E' to end turn \nPress 'H' to view shorthand notations");
                         while (!decisionMade)
                         {
                             var keyPress = Console.ReadKey(true).Key;
@@ -509,14 +509,14 @@ namespace Terminal_Maxi_Yahtzee
                                 player.PrintPlayerCard();
                                 Console.WriteLine();
 
-                                Console.WriteLine($"Press 'ENTER' to throw\n Press 'S' to view scoreboard \n Press 'E' to end turn \n Press 'H' to view shorthand notations");
+                                Console.WriteLine($"Press 'ENTER' to throw\nPress 'S' to view scoreboard \nPress 'E' to end turn \nPress 'H' to view shorthand notations");
                             }
                             else if (keyPress == ConsoleKey.H)
                             {
                                 Console.Clear();
                                 // Display shorthand notations when 'H' is pressed
                                 player.DisplayShorthandNotations();
-                                Console.WriteLine($"Press 'ENTER' to throw\n Press 'S' to view scoreboard \n Press 'E' to end turn \n Press 'H' to view shorthand notations");
+                                Console.WriteLine($"Press 'ENTER' to throw\nPress 'S' to view scoreboard \nPress 'E' to end turn \nPress 'H' to view shorthand notations");
                             }
                             else if (keyPress == ConsoleKey.E)
                             {
@@ -580,7 +580,7 @@ namespace Terminal_Maxi_Yahtzee
                                         Console.WriteLine($"\n{diceThrower.GetDiceValuesAsString()}");
                                         Console.ResetColor();
                                         Console.WriteLine();
-                                        Console.WriteLine($"Press 'ENTER' to throw\n Press 'S' to view scoreboard \n Press 'E' to end turn \n Press 'H' to view shorthand notations");
+                                        Console.WriteLine($"Press 'ENTER' to throw\nPress 'S' to view scoreboard \nPress 'E' to end turn \nPress 'H' to view shorthand notations");
                                     }
                                     else if (keyPress == ConsoleKey.H)
                                     {
@@ -589,7 +589,7 @@ namespace Terminal_Maxi_Yahtzee
                                         player.DisplayShorthandNotations();
                                         Console.WriteLine($"{diceThrower.GetDiceValuesAsString()}");
                                         Console.WriteLine();
-                                        Console.WriteLine($"Press 'ENTER' to throw\n Press 'S' to view scoreboard \n Press 'E' to end turn \n Press 'H' to view shorthand notations");
+                                        Console.WriteLine($"Press 'ENTER' to throw\nPress 'S' to view scoreboard \nPress 'E' to end turn \nPress 'H' to view shorthand notations");
 
                                     }
                                     else if (keyPress == ConsoleKey.E)
@@ -600,7 +600,7 @@ namespace Terminal_Maxi_Yahtzee
                                         Console.ForegroundColor = ConsoleColor.Green;
                                         Console.WriteLine($"You ended your turn early. {throwsRemaining} throws carried over to your next turn.\n");
                                         Console.ResetColor();
-                                        Console.WriteLine($"Press 'ENTER' to throw\n Press 'S' to view scoreboard \n Press 'E' to end turn \n Press 'H' to view shorthand notations");
+                                        Console.WriteLine($"Press 'ENTER' to throw\nPress 'S' to view scoreboard \nPress 'E' to end turn \nPress 'H' to view shorthand notations");
 
 
                                         decisionMade = true;
