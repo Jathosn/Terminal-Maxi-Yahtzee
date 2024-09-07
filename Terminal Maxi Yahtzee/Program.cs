@@ -82,9 +82,10 @@ namespace Terminal_Maxi_Yahtzee
 
             PrintPlayerCard();
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("\nEnter category name to set score and end your turn");
+            Console.WriteLine("\nTurn ended: Enter category\n");
             Console.ResetColor();
             string inputCategory = Console.ReadLine().ToLower().Trim();
+            Console.Clear();
 
             if (CategoryShortcuts.ContainsKey(inputCategory))
             {
@@ -552,6 +553,7 @@ namespace Terminal_Maxi_Yahtzee
 
                         for (int i = 0; i < throwCount; i++)
                         {
+
                             Console.ForegroundColor = ConsoleColor.White;
                             Console.WriteLine($"{diceThrower.GetDiceValuesAsString()}\n");
                             Console.ResetColor();
@@ -611,7 +613,7 @@ namespace Terminal_Maxi_Yahtzee
                                     {
                                         decisionMade = true;
                                     }
-                                    // set statement to handle incorrect keypresses so that nothing happens
+
                                 }
                                 if (endTurn)
                                 {
@@ -628,7 +630,7 @@ namespace Terminal_Maxi_Yahtzee
                                 Console.WriteLine("No throws remaining.");
                             }
                         }
-
+                        Console.Clear();
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine("Result:");
                         Console.WriteLine($"\n{diceThrower.GetDiceValuesAsString()}\n");
