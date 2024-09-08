@@ -53,6 +53,12 @@ namespace Refactoring
             Console.WriteLine("Invalid input. Please enter a positive integer greater than 0.");
             Console.ResetColor();
         }
+        public static void InvalidPlayerNameEntry()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Invalid input. Name cannot be empty");
+            Console.ResetColor();
+        }
         public static void GameStarting()
         {
             Console.Write("Game starting...");

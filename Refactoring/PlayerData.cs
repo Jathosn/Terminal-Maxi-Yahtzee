@@ -25,6 +25,7 @@ namespace Refactoring
                 }
                 else
                 {
+                    Console.Clear();
                     // Error handling: display a message and reprompt
                     StandardMessages.InvalidPlayerCountEntry();
                 }
@@ -35,13 +36,28 @@ namespace Refactoring
         {
             for (int i = 1; i <= playerCount; i++)
             {
-                Console.Clear();
-                Console.Write($"Enter name for player {i}: ");
-                string name = Console.ReadLine();
-                players.Add(new Player(name));
+                string name = "";
 
+                // Loop until a valid name is entered
+                while (string.IsNullOrWhiteSpace(name))
+                {
+                    Console.Write($"Enter name for player {i}: ");
+                    name = Console.ReadLine();
+
+                    if (string.IsNullOrWhiteSpace(name))
+                    {
+                        Console.Clear();
+                        // If the name is empty or contains only whitespace, show an error
+                        StandardMessages.InvalidPlayerNameEntry();
+                    }
+                }
+                Console.Clear();
+
+                // Add the player after a valid name has been entered
+                players.Add(new Player(name));
             }
         }
+
         public class Player
         {
             public string Name { get; private set; }
