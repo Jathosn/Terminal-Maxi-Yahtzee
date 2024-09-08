@@ -13,7 +13,6 @@ namespace Refactoring
         public static List<Player> players = new List<Player>();
         public static void PlayerCount()
         {
-            int playerCount = 0;
             while (true)
             {
                 Console.Write("Please input the number of players: ");
@@ -41,6 +40,14 @@ namespace Refactoring
                 string name = Console.ReadLine();
                 players.Add(new Player(name));
 
+            }
+        }
+        public class Player
+        {
+            public string Name { get; private set; }
+            public Player(string name)
+            {
+                Name = name;
             }
         }
     }
