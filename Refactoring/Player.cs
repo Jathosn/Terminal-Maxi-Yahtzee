@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Refactoring
 {
@@ -8,7 +9,8 @@ namespace Refactoring
         // Player properties
         public string Name { get; private set; }
         public Dictionary<string, int?> PlayerCard { get; private set; }
-        public int AvailableThrows { get; private set; }
+        public int AvailableThrows { get; set; }
+        public bool BonusCheck { get; set; }
 
         // Constructor
         public Player(string name)
@@ -44,6 +46,48 @@ namespace Refactoring
                 { "chance", null },
                 { "maxi-yahtzee", null }
             };
+            BonusCheck = false;
+        }
+
+        public bool IsScoreboardComplete()
+        {
+            return PlayerCard.Values.All(score => score.HasValue);
+        }
+        public void ChooseScoreCategory(int[] diceValues)
+        {
+            // Check if the player skipped their turn (diceValues is null)
+            bool turnSkipped = diceValues == null;
+
+            PlayerData.PrintPlayerCard(this);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("\nTurn ended: Enter category\n");
+            Console.ResetColor();
+            string inputCategory = Console.ReadLine().ToLower().Trim();
+            Console.Clear();
+
+            //if (Shortcuts.ContainsKey(inputCategory))
+            //{
+            //    inputCategory = CategoryShortcuts[inputCategory];
+            //}
+
+            // Check if the category is valid and not already scored
+            if (PlayerCard.ContainsKey(inputCategory) && !PlayerCard[inputCategory].HasValue)
+            {
+                int score = turnSkipped ? 0 : ScoreCalculator.ScoreFunctions[inputCategory](diceValues); // Set score to 0 if no dice were rolled
+                PlayerCard[inputCategory] = score;
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine($"{inputCategory} set to {score}");
+                Console.ResetColor();
+                ScoreCalculator.CheckBonusEligibility(this);
+            }
+            else
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Invalid category or already scored. Please try again.");
+                Console.ResetColor();
+                ChooseScoreCategory(diceValues); // Retry if invalid input
+            }
         }
     }
 }

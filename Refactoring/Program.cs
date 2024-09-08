@@ -10,12 +10,25 @@ namespace Refactoring
     {
         static void Main(string[] args)
         {
-            //List<Player> players = new List<Player>();
+            Console.WriteLine("Starting the game setup...");
+
+            List<Player> players = new List<Player>();
             StandardMessages.WelcomeMessage();
             PlayerData.PlayerCount();
+
+            Console.WriteLine("Number of players set.");
+
             PlayerData.PlayerName();
+
+            Console.WriteLine("Players added.");
+
             StandardMessages.GameStarting();
-            Console.ReadKey();  // This will keep the console window open until a key is pressed
+
+            GameFlow gameflow = new GameFlow(players);
+            gameflow.StartGame();
+
+            Console.WriteLine("Game started.");
+            Console.ReadKey();  // Keep the console open
         }
     }
 }
