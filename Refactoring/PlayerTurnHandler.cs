@@ -145,6 +145,14 @@ namespace Refactoring
                         Console.WriteLine("No throws remaining.");
                     }
                 }
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("Result:");
+                Console.WriteLine($"\n{diceThrower.GetDiceValuesAsString()}\n");
+                Console.ResetColor();
+                _player.ChooseScoreCategory(diceThrower.DiceValues);
+
+                Console.WriteLine();
             }
 
         }
