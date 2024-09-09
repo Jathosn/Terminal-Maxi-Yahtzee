@@ -49,7 +49,7 @@ namespace Refactoring
                             break;
                         case ConsoleKey.H:
                             Console.Clear();
-                            ShowShorthandNotations();
+                            Shortcuts.DisplayShorthandNotations();
                             break;
                         case ConsoleKey.E:
                             Console.Clear();
@@ -58,7 +58,6 @@ namespace Refactoring
                             turnSkipped = true;
                             break;
                     }
-                    Console.Clear();
                     if (turnSkipped)
                     {
                         continue;  // Skip to the next player if the turn was skipped
@@ -103,7 +102,7 @@ namespace Refactoring
                                 {
                                     Console.Clear();
                                     // Display shorthand notations when 'H' is pressed
-                                    ShowShorthandNotations();
+                                    Shortcuts.DisplayShorthandNotations();
                                     Console.ForegroundColor = ConsoleColor.White;
                                     Console.WriteLine($"{diceThrower.GetDiceValuesAsString()}\n");
                                     Console.WriteLine($"\u001b[38;2;255;150;0mYou have {throwsRemaining} throw(s) remaining, {_player.Name}\u001b[0m \n");
@@ -184,14 +183,6 @@ namespace Refactoring
             Console.Clear();
             Console.WriteLine($"{_player.Name}'s Scoreboard:");
             PlayerData.PrintPlayerCard(_player);
-            Console.WriteLine("Press any key to continue...");
-            Console.ReadKey();
-        }
-
-        private void ShowShorthandNotations()
-        {
-            Console.Clear();
-            Shortcuts.DisplayShorthandNotations();
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
         }

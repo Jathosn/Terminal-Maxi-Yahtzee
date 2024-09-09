@@ -10,8 +10,6 @@ namespace Refactoring
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Starting the game setup...");
-
             List<Player> players = new List<Player>();
             StandardMessages.WelcomeMessage();
             PlayerData.PlayerCount();
