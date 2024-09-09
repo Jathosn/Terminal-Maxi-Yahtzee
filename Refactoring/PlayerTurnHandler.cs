@@ -23,34 +23,41 @@ namespace Refactoring
             bool decisionMade = false;
             bool turnSkipped = false;
 
-            while (_player.AvailableThrows > 0)
+            Console.Clear();
+            Console.WriteLine($"It's your turn, {_player.Name}");
+            PlayerData.PrintPlayerCard(_player);
+            Console.WriteLine($"\u001b[38;2;255;150;0m\nYou have {_player.AvailableThrows} throw(s) available.\u001b[0m \n");
+            Console.WriteLine("Press 'ENTER' to throw\nPress 'S' to view scoreboard\nPress 'E' to end turn\nPress 'H' to view shorthand notations");
+
+
+            while (!decisionMade)
+
             {
-                Console.Clear();
-                Console.WriteLine($"It's your turn, {_player.Name}");
-                PlayerData.PrintPlayerCard(_player);
-                Console.WriteLine($"\u001b[38;2;255;150;0m\nYou have {_player.AvailableThrows} throw(s) available.\u001b[0m \n");
-                Console.WriteLine("Press 'ENTER' to throw\nPress 'S' to view scoreboard\nPress 'E' to end turn\nPress 'H' to view shorthand notations");
-
                 var keyPress = Console.ReadKey(true).Key;
-
                 switch (keyPress)
                 {
                     case ConsoleKey.Enter:
-                        RollDice();
+                        Console.Clear();
                         decisionMade = true;
                         break;
                     case ConsoleKey.S:
+                        Console.Clear();
                         ViewScoreboard();
                         break;
                     case ConsoleKey.H:
+                        Console.Clear();
                         ShowShorthandNotations();
                         break;
                     case ConsoleKey.E:
+                        Console.Clear();
                         EndTurnEarly();
                         decisionMade = true;
+                        turnSkipped = true;
                         break;
                 }
+                Console.Clear();
             }
+
         }
 
         private void RollDice()

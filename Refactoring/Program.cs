@@ -15,20 +15,33 @@ namespace Refactoring
             List<Player> players = new List<Player>();
             StandardMessages.WelcomeMessage();
             PlayerData.PlayerCount();
-
-            Console.WriteLine("Number of players set.");
-
             PlayerData.PlayerName();
 
             Console.WriteLine("Players added.");
 
             StandardMessages.GameStarting();
 
-            GameFlow gameflow = new GameFlow(players);
-            gameflow.StartGame();
+            foreach (var player in PlayerData.players)  // Use PlayerData.players if players are being stored there
+            {
+                // Check if the player's scoreboard is complete
+                bool isComplete = PlayerData.IsScoreboardComplete(player);
 
-            Console.WriteLine("Game started.");
-            Console.ReadKey();  // Keep the console open
+                // Print the result to the console
+                Console.WriteLine($"{player.Name}'s scoreboard is complete: {isComplete}");
+
+                if (!isComplete)
+                {
+                    PlayerTurnHandler turnHandler = new PlayerTurnHandler(player);
+                    Console.Clear();
+
+                    if ()
+                    {
+                        continue;  // Skip to the next player if the turn was skipped
+                    }
+                }
+            }
+
+            Console.ReadKey();
         }
     }
 }
