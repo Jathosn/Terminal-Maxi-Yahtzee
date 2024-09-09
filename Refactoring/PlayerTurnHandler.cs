@@ -102,7 +102,7 @@ namespace Refactoring
                                     {
                                         Console.Clear();
                                         ViewScoreboard();
-                                        Console.WriteLine($"\u001b[38;2;255;150;0m\nYou have {_player.AvailableThrows} throw(s) available.\u001b[0m \n");
+                                        Console.WriteLine($"\u001b[38;2;255;150;0m\nYou have {throwsRemaining} throw(s) available.\u001b[0m \n");
                                         Console.WriteLine("Press 'ENTER' to throw\nPress 'S' to view scoreboard\nPress 'E' to end turn\nPress 'H' to view shorthand notations");
                                         decisionMade = false;  // Stay in the input loop
                                     }
@@ -110,7 +110,7 @@ namespace Refactoring
                                     {
                                         Console.Clear();
                                         Shortcuts.DisplayShorthandNotations();
-                                        Console.WriteLine($"\u001b[38;2;255;150;0m\nYou have {_player.AvailableThrows} throw(s) available.\u001b[0m \n");
+                                        Console.WriteLine($"\u001b[38;2;255;150;0m\nYou have {throwsRemaining} throw(s) available.\u001b[0m \n");
                                         Console.WriteLine("Press 'ENTER' to throw\nPress 'S' to view scoreboard\nPress 'E' to end turn\nPress 'H' to view shorthand notations");
                                         decisionMade = false;  // Stay in the input loop
                                     }
@@ -191,8 +191,7 @@ namespace Refactoring
         {
             _player.AvailableThrows += 3; // Save all 3 throws for the next turn
             Console.WriteLine($"{_player.Name} skipped their turn. 3 throws saved for later turns.");
-            Console.WriteLine("Press any key to continue...");
-            Console.ReadKey();
+            _player.ChooseScoreCategory(null);
         }
     }
 

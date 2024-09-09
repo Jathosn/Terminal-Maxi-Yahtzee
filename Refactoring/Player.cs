@@ -71,12 +71,13 @@ namespace Refactoring
             //}
 
             // Check if the category is valid and not already scored
+
+
             if (PlayerCard.ContainsKey(inputCategory) && !PlayerCard[inputCategory].HasValue)
             {
                 int score = turnSkipped ? 0 : ScoreCalculator.ScoreFunctions[inputCategory](diceValues); // Set score to 0 if no dice were rolled
                 PlayerCard[inputCategory] = score;
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine($"{inputCategory} set to {score}");
                 Console.ResetColor();
                 ScoreCalculator.CheckBonusEligibility(this);
             }
