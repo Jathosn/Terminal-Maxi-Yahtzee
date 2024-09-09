@@ -32,12 +32,7 @@ namespace Refactoring
                 if (!isComplete)
                 {
                     PlayerTurnHandler turnHandler = new PlayerTurnHandler(player);
-                    Console.Clear();
-
-                    if ()
-                    {
-                        continue;  // Skip to the next player if the turn was skipped
-                    }
+                    Console.WriteLine($"Handler escaped");
                 }
             }
 
