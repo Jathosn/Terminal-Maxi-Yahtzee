@@ -11,6 +11,7 @@ namespace Refactoring
     {
         public static int playerCount;
         public static List<Player> players = new List<Player>();
+
         public static void PlayerCount()
         {
             while (true)
@@ -57,14 +58,19 @@ namespace Refactoring
                 players.Add(new Player(name));
             }
         }
-
-        public class Player
+        public static void PrintPlayerCard(Player player)
         {
-            public string Name { get; private set; }
-            public Player(string name)
+            int maxKeyLength = player.PlayerCard.Keys.Max(key => key.Length);
+            foreach (var entry in player.PlayerCard)
             {
-                Name = name;
+                string scoreText = entry.Value.HasValue ? entry.Value.ToString() : "-";
+                Console.WriteLine($"{entry.Key.PadRight(maxKeyLength)}: {scoreText}");
             }
+        }
+        public static bool IsScoreboardComplete(Player player)
+        {
+            // Check if all values in PlayerCard are not null (i.e., all categories are filled)
+            return player.PlayerCard.Values.All(score => score.HasValue);
         }
     }
 }
