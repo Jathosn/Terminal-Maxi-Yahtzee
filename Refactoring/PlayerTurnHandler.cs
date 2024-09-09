@@ -20,7 +20,7 @@ namespace Refactoring
 
         public void StartTurn()
         {
-            while (!_player.IsScoreboardComplete())
+            if (!_player.IsScoreboardComplete())
             {
                 bool decisionMade = false;
 

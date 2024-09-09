@@ -14,25 +14,27 @@ namespace Refactoring
             StandardMessages.WelcomeMessage();
             PlayerData.PlayerCount();
             PlayerData.PlayerName();
-
             Console.WriteLine("Players added.");
 
             StandardMessages.GameStarting();
-
-            foreach (var player in PlayerData.players)  // Use PlayerData.players if players are being stored there
+            bool allPlayersComplete = false;
+            while (!allPlayersComplete)
             {
-                // Check if the player's scoreboard is complete
-                bool isComplete = PlayerData.IsScoreboardComplete(player);
-
-                // Print the result to the console
-                Console.WriteLine($"{player.Name}'s scoreboard is complete: {isComplete}");
-
-                if (!isComplete)
+                foreach (var player in PlayerData.players)
                 {
-                    PlayerTurnHandler turnHandler = new PlayerTurnHandler(player);
-                    Console.WriteLine($"Handler escaped");
+                    bool isComplete = PlayerData.IsScoreboardComplete(player);
+
+                    Console.WriteLine($"{player.Name}'s scoreboard is complete: {isComplete}");
+
+                    if (!isComplete)
+                    {
+                        PlayerTurnHandler turnHandler = new PlayerTurnHandler(player);
+                        Console.WriteLine($"Handler escaped");
+                    }
                 }
+                allPlayersComplete = PlayerData.players.All(p => PlayerData.IsScoreboardComplete(p));
             }
+               
 
             Console.ReadKey();
         }
