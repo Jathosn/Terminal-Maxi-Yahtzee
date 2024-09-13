@@ -33,7 +33,7 @@ namespace Refactoring
             }
 
         }
-        public static void PlayerName()
+        public static void PlayerName(List<Player> players)
         {
             for (int i = 1; i <= playerCount; i++)
             {
@@ -48,13 +48,13 @@ namespace Refactoring
                     if (string.IsNullOrWhiteSpace(name))
                     {
                         Console.Clear();
-                        // If the name is empty or contains only whitespace, show an error
                         StandardMessages.InvalidPlayerNameEntry();
                     }
                 }
+
                 Console.Clear();
 
-                // Add the player after a valid name has been entered
+                // Add the player to the list
                 players.Add(new Player(name));
             }
         }

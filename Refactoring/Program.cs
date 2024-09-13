@@ -13,7 +13,8 @@ namespace Refactoring
             List<Player> players = new List<Player>();
             StandardMessages.WelcomeMessage();
             PlayerData.PlayerCount();
-            PlayerData.PlayerName();
+            PlayerData.PlayerName(players);
+            ScoreCalculator scoreCalculator = new ScoreCalculator();
             Console.WriteLine("Players added.");
 
             StandardMessages.GameStarting();
@@ -30,10 +31,20 @@ namespace Refactoring
                     {
                         PlayerTurnHandler turnHandler = new PlayerTurnHandler(player);
                         Console.WriteLine($"Handler escaped");
+                        Console.WriteLine($"Number of players: {players.Count}");
                     }
+
                 }
                 allPlayersComplete = PlayerData.players.All(p => PlayerData.IsScoreboardComplete(p));
+                Console.WriteLine("Game Over. Final Score:");
+                foreach (var player in players)
+                {
+                    int finalScore = scoreCalculator.CalculateTotalScore(player);
+                    Console.WriteLine($"{player.Name}'s final score: {finalScore}");
+                    Console.WriteLine("test");
+                }
             }
+
                
 
             Console.ReadKey();
