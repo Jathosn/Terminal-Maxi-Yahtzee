@@ -65,12 +65,7 @@ namespace Refactoring
             string inputCategory = Console.ReadLine().ToLower().Trim();
             Console.Clear();
 
-            //if (Shortcuts.ContainsKey(inputCategory))
-            //{
-            //    inputCategory = CategoryShortcuts[inputCategory];
-            //}
-
-            // Check if the category is valid and not already scored
+                inputCategory = Shortcuts.GetFullCategoryName(inputCategory); // Convert shorthand to full name
 
 
             if (PlayerCard.ContainsKey(inputCategory) && !PlayerCard[inputCategory].HasValue)

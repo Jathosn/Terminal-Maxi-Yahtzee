@@ -31,9 +31,9 @@ namespace Refactoring
         { "ch", "chance" },
         { "ma", "maxi-yahtzee" }
     };
-        public static string GetFullCategoryName(string shortcut)
+        public static string GetFullCategoryName(string shorthand)
         {
-            return CategoryShortcuts[shortcut]; // No need for error handling if the shortcut always exists
+            return CategoryShortcuts.ContainsKey(shorthand) ? CategoryShortcuts[shorthand] : shorthand;
         }
         public static void DisplayShorthandNotations()
         {
