@@ -9,12 +9,12 @@ namespace Refactoring
     public class GameFlow
     {
         private List<Player> _players;
-        private PlayerTurnHandler _turnHandler;
         private ScoreCalculator _scoreCalculator;
 
         public GameFlow(List<Player> players)
         {
             _players = players;
+            _scoreCalculator = new ScoreCalculator();
         }
 
         public void StartGame()
@@ -25,9 +25,10 @@ namespace Refactoring
                 {
                     if (!player.IsScoreboardComplete())
                     {
+                        Console.Clear();
                         Console.WriteLine($"Player {player.Name}'s turn.");
-                        PlayerTurnHandler turnHandler = new PlayerTurnHandler(player);  // Handle the player's turn
-                        turnHandler.StartTurn();  // Start their turn
+                        PlayerTurnHandler turnHandler = new PlayerTurnHandler(player);
+                        turnHandler.StartTurn();
                     }
                 }
             }
@@ -38,7 +39,10 @@ namespace Refactoring
 
         private void EndGame()
         {
-            Console.WriteLine("All players have completed their scoreboards. Game over!");
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("Game Over. Final Score:\n");
+            Console.ResetColor();
             foreach (var player in _players)
             {
                 int finalScore = _scoreCalculator.CalculateTotalScore(player);
@@ -46,5 +50,4 @@ namespace Refactoring
             }
         }
     }
-
 }

@@ -13,11 +13,15 @@ namespace Refactoring
             List<Player> players = new List<Player>();
             StandardMessages.WelcomeMessage();
             PlayerData.PlayerCount();
-            PlayerData.PlayerName(players);
+            PlayerData.PlayerName();
             ScoreCalculator scoreCalculator = new ScoreCalculator();
             Console.WriteLine("Players added.");
 
             StandardMessages.GameStarting();
+            GameFlow gameFlow = new GameFlow(PlayerData.players);
+            gameFlow.StartGame(); // Start the game using GameFlow
+
+            Console.ReadKey();
             bool allPlayersComplete = false;
             while (!allPlayersComplete)
             {

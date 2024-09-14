@@ -33,7 +33,7 @@ namespace Refactoring
             }
 
         }
-        public static void PlayerName(List<Player> players)
+        public static void PlayerName()
         {
             for (int i = 1; i <= playerCount; i++)
             {
@@ -54,7 +54,7 @@ namespace Refactoring
 
                 Console.Clear();
 
-                // Add the player to the list
+                // Add the player to the static list
                 players.Add(new Player(name));
             }
         }

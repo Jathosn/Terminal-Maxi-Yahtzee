@@ -15,7 +15,6 @@ namespace Refactoring
         {
             _player = player;
             _diceThrower = new DiceThrower();
-            StartTurn();
         }
 
         public void StartTurn()
