@@ -12,9 +12,7 @@ namespace Refactoring
         {
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write("Welcome to Terminal Maxi Yahtzee.\n");
-            Console.ResetColor();
-            Console.Write("Please input the number of players: ");
-        }
+            Console.ResetColor();        }
         public static void TurnEnded()
         {
             Console.ForegroundColor = ConsoleColor.White;

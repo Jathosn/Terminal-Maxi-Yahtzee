@@ -42,6 +42,7 @@ namespace Refactoring
                 // Loop until a valid name is entered
                 while (string.IsNullOrWhiteSpace(name))
                 {
+                    Console.Clear();
                     Console.Write($"Enter name for player {i}: ");
                     name = Console.ReadLine();
 

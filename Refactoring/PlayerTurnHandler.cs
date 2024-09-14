@@ -24,7 +24,7 @@ namespace Refactoring
                 bool decisionMade = false;
 
                 Console.Clear();
-                Console.WriteLine($"It's your turn, {_player.Name}");
+                Console.WriteLine($"It's your turn, {_player.Name}\n");
                 PlayerData.PrintPlayerCard(_player);
                 Console.WriteLine($"\u001b[38;2;255;150;0m\nYou have {_player.AvailableThrows} throw(s) available.\u001b[0m \n");
                 Console.WriteLine("Press 'ENTER' to throw\nPress 'S' to view scoreboard\nPress 'E' to end turn\nPress 'H' to view shorthand notations");
@@ -44,7 +44,7 @@ namespace Refactoring
                         case ConsoleKey.S:
                             Console.Clear();
                             ViewScoreboard();
-                            Console.WriteLine($"\u001b[38;2;255;150;0m\nYou have {_player.AvailableThrows} throw(s) available.\u001b[0m \n");
+                            Console.WriteLine($"\u001b[38;2;255;150;0m\nYou have {_player.AvailableThrows} throw(s) available.\u001b[0m\n");
                             Console.WriteLine("Press 'ENTER' to throw\nPress 'S' to view scoreboard\nPress 'E' to end turn\nPress 'H' to view shorthand notations");
                             decisionMade = false;  // Stay in the input loop
                             break;
@@ -52,7 +52,7 @@ namespace Refactoring
                         case ConsoleKey.H:
                             Console.Clear();
                             Shortcuts.DisplayShorthandNotations();
-                            Console.WriteLine($"\u001b[38;2;255;150;0m\nYou have {_player.AvailableThrows} throw(s) available.\u001b[0m \n");
+                            Console.WriteLine($"\u001b[38;2;255;150;0mYou have {_player.AvailableThrows} throw(s) available.\u001b[0m \n");
                             Console.WriteLine("Press 'ENTER' to throw\nPress 'S' to view scoreboard\nPress 'E' to end turn\nPress 'H' to view shorthand notations");
                             decisionMade = false;  // Stay in the input loop
                             break;
@@ -101,6 +101,8 @@ namespace Refactoring
                                     {
                                         Console.Clear();
                                         ViewScoreboard();
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        Console.WriteLine($"\n{diceThrower.GetDiceValuesAsString()}");
                                         Console.WriteLine($"\u001b[38;2;255;150;0m\nYou have {throwsRemaining} throw(s) available.\u001b[0m \n");
                                         Console.WriteLine("Press 'ENTER' to throw\nPress 'S' to view scoreboard\nPress 'E' to end turn\nPress 'H' to view shorthand notations");
                                         decisionMade = false;  // Stay in the input loop
@@ -109,6 +111,8 @@ namespace Refactoring
                                     {
                                         Console.Clear();
                                         Shortcuts.DisplayShorthandNotations();
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        Console.WriteLine($"{diceThrower.GetDiceValuesAsString()}");
                                         Console.WriteLine($"\u001b[38;2;255;150;0m\nYou have {throwsRemaining} throw(s) available.\u001b[0m \n");
                                         Console.WriteLine("Press 'ENTER' to throw\nPress 'S' to view scoreboard\nPress 'E' to end turn\nPress 'H' to view shorthand notations");
                                         decisionMade = false;  // Stay in the input loop
@@ -182,7 +186,6 @@ namespace Refactoring
         private void ViewScoreboard()
         {
             Console.Clear();
-            Console.WriteLine($"{_player.Name}'s Scoreboard:");
             PlayerData.PrintPlayerCard(_player);
         }
 
