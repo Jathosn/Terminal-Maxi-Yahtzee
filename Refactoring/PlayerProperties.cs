@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Refactoring
 {
-    public class Player
+    public class PlayerProperties
     {
         // Player properties
         public string Name { get; private set; }
@@ -13,7 +13,7 @@ namespace Refactoring
         public bool BonusCheck { get; set; }
 
         // Constructor
-        public Player(string name)
+        public PlayerProperties(string name)
         {
             Name = name;
             AvailableThrows = 3; // Initial available throws
@@ -25,26 +25,26 @@ namespace Refactoring
         {
             PlayerCard = new Dictionary<string, int?>
             {
-                { "ones", 85 },
+                { "ones", null },
                 { "twos", null },
-                { "threes", 0 },
-                { "fours", 0 },
-                { "fives", 0 },
-                { "sixes", 0 },
-                { "one pair", 0 },
-                { "two pairs", 0 },
-                { "three pairs", 0 },
-                { "3 same", 0 },
-                { "4 same", 0 },
-                { "5 same", 0 },
-                { "small straight", 0 },
-                { "large straight", 0 },
-                { "full straight", 0 },
-                { "hut 2+3", 0 },
-                { "house 3+3", 0 },
-                { "tower 2+4", 0 },
-                { "chance", 0 },
-                { "maxi-yahtzee", 0 }
+                { "threes", null },
+                { "fours", null },
+                { "fives", null },
+                { "sixes", null },
+                { "one pair", null },
+                { "two pairs", null },
+                { "three pairs", null },
+                { "3 same", null },
+                { "4 same", null },
+                { "5 same", null },
+                { "small straight", null },
+                { "large straight", null },
+                { "full straight", null },
+                { "hut 2+3", null },
+                { "house 3+3", null },
+                { "tower 2+4", null },
+                { "chance", null },
+                { "maxi-yahtzee", null }
             };
             BonusCheck = false;
         }
@@ -65,12 +65,7 @@ namespace Refactoring
             string inputCategory = Console.ReadLine().ToLower().Trim();
             Console.Clear();
 
-            //if (Shortcuts.ContainsKey(inputCategory))
-            //{
-            //    inputCategory = CategoryShortcuts[inputCategory];
-            //}
-
-            // Check if the category is valid and not already scored
+                inputCategory = Shortcuts.GetFullCategoryName(inputCategory); // Convert shorthand to full name
 
 
             if (PlayerCard.ContainsKey(inputCategory) && !PlayerCard[inputCategory].HasValue)

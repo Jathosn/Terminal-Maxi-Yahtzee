@@ -10,13 +10,18 @@ namespace Refactoring
     {
         static void Main(string[] args)
         {
-            List<Player> players = new List<Player>();
+            List<PlayerProperties> players = new List<PlayerProperties>();
             StandardMessages.WelcomeMessage();
             PlayerData.PlayerCount();
             PlayerData.PlayerName();
+            ScoreCalculator scoreCalculator = new ScoreCalculator();
             Console.WriteLine("Players added.");
 
-            StandardMessages.GameStarting();
+            Console.WriteLine();
+            GameFlow gameFlow = new GameFlow(PlayerData.players);
+            gameFlow.GameInitializer(); // Start the game using GameFlow
+
+            Console.ReadKey();
             bool allPlayersComplete = false;
             while (!allPlayersComplete)
             {
@@ -28,12 +33,22 @@ namespace Refactoring
 
                     if (!isComplete)
                     {
-                        PlayerTurnHandler turnHandler = new PlayerTurnHandler(player);
+                        TurnHandler turnHandler = new TurnHandler(player);
                         Console.WriteLine($"Handler escaped");
+                        Console.WriteLine($"Number of players: {players.Count}");
                     }
+
                 }
                 allPlayersComplete = PlayerData.players.All(p => PlayerData.IsScoreboardComplete(p));
+                Console.WriteLine("Game Over. Final Score:");
+                foreach (var player in players)
+                {
+                    int finalScore = scoreCalculator.CalculateTotalScore(player);
+                    Console.WriteLine($"{player.Name}'s final score: {finalScore}");
+                    Console.WriteLine("test");
+                }
             }
+
                
 
             Console.ReadKey();

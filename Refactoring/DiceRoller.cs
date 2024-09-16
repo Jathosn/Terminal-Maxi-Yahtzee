@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace Refactoring
 {
-    public class DiceThrower
+    public class DiceRoller
     {
         public int[] DiceValues { get; private set; }
         private Random _random;
 
-        public DiceThrower()
+        public DiceRoller()
         {
             DiceValues = new int[6];
             _random = new Random();
-            RollAllDice();
+            RollDice();
         }
 
-        public void RollAllDice()
+        public void RollDice()
         {
             for (int i = 0; i < DiceValues.Length; i++)
             {
@@ -26,7 +26,7 @@ namespace Refactoring
             }
         }
 
-        public void RollSpecificDice(bool[] diceToKeep)
+        public void DiceToReroll(bool[] diceToKeep)
         {
             for (int i = 0; i < DiceValues.Length; i++)
             {
@@ -37,7 +37,7 @@ namespace Refactoring
             }
         }
 
-        public string GetDiceValuesAsString()
+        public string Dices()
         {
             return string.Join(", ", DiceValues.Select((value, index) => $"{value}"));
         }
@@ -45,11 +45,10 @@ namespace Refactoring
         public bool[] GetDiceToKeep(int[] currentRoll)
         {
             bool[] diceToKeep = new bool[currentRoll.Length];
-            // Logic to handle dice keeping goes here...
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine($"{GetDiceValuesAsString()}\n");
+                Console.WriteLine($"{Dices()}\n");
                 Console.WriteLine("Write the values (1-6) you wish to keep. Press ENTER to continue");
 
                 string input = Console.ReadLine().Trim();
@@ -69,7 +68,7 @@ namespace Refactoring
                     Console.WriteLine("Invalid input. Please enter numbers between 1 and 6.");
                     Console.ResetColor();
                     Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine($"\n{GetDiceValuesAsString()}\n");
+                    Console.WriteLine($"\n{Dices()}\n");
                     Console.ResetColor();
                     continue; // Reprompt the player
                 }
@@ -111,7 +110,7 @@ namespace Refactoring
                     Console.WriteLine("Input value does not exist. Please try again.");
                     Console.ResetColor();
                     Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine($"\n{GetDiceValuesAsString()}\n");
+                    Console.WriteLine($"\n{Dices()}\n");
                     Console.ResetColor();
                     continue; // Reprompt the player
                 }

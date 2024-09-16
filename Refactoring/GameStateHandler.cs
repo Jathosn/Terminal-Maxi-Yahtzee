@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace Refactoring
 {
-    public class GameState
+    public class GameStateHandler
     {
-        public List<Player> Players { get; private set; }
+        public List<PlayerProperties> Players { get; private set; }
         private int currentPlayerIndex = 0;
 
-        public GameState(List<Player> players)
+        public GameStateHandler(List<PlayerProperties> players)
         {
             Players = players;
         }
 
-        public Player GetCurrentPlayer()
+        public PlayerProperties GetCurrentPlayer()
         {
             return Players[currentPlayerIndex];
         }
