@@ -10,7 +10,7 @@ namespace Refactoring
     {
         static void Main(string[] args)
         {
-            List<Player> players = new List<Player>();
+            List<PlayerProperties> players = new List<PlayerProperties>();
             StandardMessages.WelcomeMessage();
             PlayerData.PlayerCount();
             PlayerData.PlayerName();
@@ -19,7 +19,7 @@ namespace Refactoring
 
             Console.WriteLine();
             GameFlow gameFlow = new GameFlow(PlayerData.players);
-            gameFlow.StartGame(); // Start the game using GameFlow
+            gameFlow.GameInitializer(); // Start the game using GameFlow
 
             Console.ReadKey();
             bool allPlayersComplete = false;
@@ -33,7 +33,7 @@ namespace Refactoring
 
                     if (!isComplete)
                     {
-                        PlayerTurnHandler turnHandler = new PlayerTurnHandler(player);
+                        TurnHandler turnHandler = new TurnHandler(player);
                         Console.WriteLine($"Handler escaped");
                         Console.WriteLine($"Number of players: {players.Count}");
                     }

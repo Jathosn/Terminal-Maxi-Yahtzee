@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Refactoring
 {
-    public class Player
+    public class PlayerProperties
     {
         // Player properties
         public string Name { get; private set; }
@@ -13,7 +13,7 @@ namespace Refactoring
         public bool BonusCheck { get; set; }
 
         // Constructor
-        public Player(string name)
+        public PlayerProperties(string name)
         {
             Name = name;
             AvailableThrows = 3; // Initial available throws

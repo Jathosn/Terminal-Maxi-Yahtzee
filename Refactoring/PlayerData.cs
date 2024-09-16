@@ -10,7 +10,7 @@ namespace Refactoring
     internal class PlayerData
     {
         public static int playerCount;
-        public static List<Player> players = new List<Player>();
+        public static List<PlayerProperties> players = new List<PlayerProperties>();
 
         public static void PlayerCount()
         {
@@ -56,10 +56,10 @@ namespace Refactoring
                 Console.Clear();
 
                 // Add the player to the static list
-                players.Add(new Player(name));
+                players.Add(new PlayerProperties(name));
             }
         }
-        public static void PrintPlayerCard(Player player)
+        public static void PrintPlayerCard(PlayerProperties player)
         {
             int maxKeyLength = player.PlayerCard.Keys.Max(key => key.Length);
             foreach (var entry in player.PlayerCard)
@@ -68,7 +68,7 @@ namespace Refactoring
                 Console.WriteLine($"{entry.Key.PadRight(maxKeyLength)}: {scoreText}");
             }
         }
-        public static bool IsScoreboardComplete(Player player)
+        public static bool IsScoreboardComplete(PlayerProperties player)
         {
             // Check if all values in PlayerCard are not null (i.e., all categories are filled)
             return player.PlayerCard.Values.All(score => score.HasValue);

@@ -160,7 +160,7 @@ namespace Refactoring
                 }
                 return dice.All(d => d == dice[0]) ? 100 : 0;
             }
-        public static void CheckBonusEligibility(Player player)
+        public static void CheckBonusEligibility(PlayerProperties player)
         {
             int? combinedScore = 0;
 
@@ -176,7 +176,7 @@ namespace Refactoring
                 player.BonusCheck = true;
             }
         }
-        public int CalculateTotalScore(Player player)
+        public int CalculateTotalScore(PlayerProperties player)
         {
             int totalScore = player.PlayerCard.Values.Sum(v => v.GetValueOrDefault());
 

@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace Refactoring
 {
-    public class PlayerTurnHandler
+    public class TurnHandler
     {
-        private Player _player;
-        private DiceThrower _diceThrower;
+        private PlayerProperties _player;
+        private DiceRoller _diceThrower;
 
-        public PlayerTurnHandler(Player player)
+        public TurnHandler(PlayerProperties player)
         {
             _player = player;
-            _diceThrower = new DiceThrower();
+            _diceThrower = new DiceRoller();
         }
 
-        public void StartTurn()
+        public void NextPlayer()
         {
             if (!_player.IsScoreboardComplete())
             {
@@ -72,14 +72,14 @@ namespace Refactoring
                     if (decisionMade)  // Only proceed to dice rolling if Enter was pressed
                     {
                         int currentThrows = _player.AvailableThrows;
-                        DiceThrower diceThrower = new DiceThrower();
+                        DiceRoller diceThrower = new DiceRoller();
                         int throwCount = _player.AvailableThrows;
                         bool endTurn = false;
 
                         for (int i = 0; i < throwCount; i++)
                         {
                             Console.ForegroundColor = ConsoleColor.White;
-                            Console.WriteLine($"{diceThrower.GetDiceValuesAsString()}\n");
+                            Console.WriteLine($"{diceThrower.Dices()}\n");
                             Console.ResetColor();
 
                             int throwsRemaining = throwCount - i - 1;
@@ -101,7 +101,7 @@ namespace Refactoring
                                         Console.Clear();
                                         ViewScoreboard();
                                         Console.ForegroundColor = ConsoleColor.White;
-                                        Console.WriteLine($"\n{diceThrower.GetDiceValuesAsString()}");
+                                        Console.WriteLine($"\n{diceThrower.Dices()}");
                                         Console.WriteLine($"\u001b[38;2;255;150;0m\nYou have {throwsRemaining} throw(s) available.\u001b[0m \n");
                                         Console.WriteLine("Press 'ENTER' to throw\nPress 'S' to view scoreboard\nPress 'E' to end turn\nPress 'H' to view shorthand notations");
                                         decisionMade = false;  // Stay in the input loop
@@ -111,7 +111,7 @@ namespace Refactoring
                                         Console.Clear();
                                         Shortcuts.DisplayShorthandNotations();
                                         Console.ForegroundColor = ConsoleColor.White;
-                                        Console.WriteLine($"{diceThrower.GetDiceValuesAsString()}");
+                                        Console.WriteLine($"{diceThrower.Dices()}");
                                         Console.WriteLine($"\u001b[38;2;255;150;0m\nYou have {throwsRemaining} throw(s) available.\u001b[0m \n");
                                         Console.WriteLine("Press 'ENTER' to throw\nPress 'S' to view scoreboard\nPress 'E' to end turn\nPress 'H' to view shorthand notations");
                                         decisionMade = false;  // Stay in the input loop
@@ -141,7 +141,7 @@ namespace Refactoring
                                 // Continue rolling dice
                                 int[] currentRoll = diceThrower.DiceValues;  // Get the current roll
                                 bool[] diceToKeep = diceThrower.GetDiceToKeep(currentRoll);  // Ask player which dice to keep
-                                diceThrower.RollSpecificDice(diceToKeep);
+                                diceThrower.DiceToReroll(diceToKeep);
                             }
                             else
                             {
@@ -153,7 +153,7 @@ namespace Refactoring
                         Console.Clear();
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine("Result:");
-                        Console.WriteLine($"\n{diceThrower.GetDiceValuesAsString()}\n");
+                        Console.WriteLine($"\n{diceThrower.Dices()}\n");
                         Console.ResetColor();
                         _player.ChooseScoreCategory(diceThrower.DiceValues);
                         Console.WriteLine();
@@ -166,7 +166,7 @@ namespace Refactoring
         private void RollDice()
         {
             Console.Clear();
-            Console.WriteLine($"{_diceThrower.GetDiceValuesAsString()}\n");
+            Console.WriteLine($"{_diceThrower.Dices()}\n");
             _player.AvailableThrows -= 1;
             if (_player.AvailableThrows > 0)
             {

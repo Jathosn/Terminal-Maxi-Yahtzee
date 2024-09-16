@@ -8,16 +8,16 @@ namespace Refactoring
 {
     public class GameFlow
     {
-        private List<Player> _players;
+        private List<PlayerProperties> _players;
         private ScoreCalculator _scoreCalculator;
 
-        public GameFlow(List<Player> players)
+        public GameFlow(List<PlayerProperties> players)
         {
             _players = players;
             _scoreCalculator = new ScoreCalculator();
         }
 
-        public void StartGame()
+        public void GameInitializer()
         {
             while (!_players.All(player => player.IsScoreboardComplete()))
             {
@@ -26,17 +26,15 @@ namespace Refactoring
                     if (!player.IsScoreboardComplete())
                     {
                         Console.Clear();
-                        PlayerTurnHandler turnHandler = new PlayerTurnHandler(player);
-                        turnHandler.StartTurn();
+                        TurnHandler turnHandler = new TurnHandler(player);
+                        turnHandler.NextPlayer();
                     }
                 }
             }
-
-            // End the game
-            EndGame();
+            EndGameScoreCalculation();
         }
 
-        private void EndGame()
+        private void EndGameScoreCalculation()
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
