@@ -33,6 +33,7 @@ namespace Refactoring
                     Console.ResetColor();
                 }
             }
+            Console.Clear();
 
         }
         public static void PlayerName()
@@ -44,7 +45,6 @@ namespace Refactoring
                 // Loop until a valid name is entered
                 while (string.IsNullOrWhiteSpace(name))
                 {
-                    Console.Clear();
                     Console.Write($"Enter name for player {i}: ");
                     name = Console.ReadLine();
 
@@ -52,7 +52,7 @@ namespace Refactoring
                     {
                         Console.Clear();
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Invalid input. Please enter a positive integer greater than 0.");
+                        Console.WriteLine("Invalid input. Name cannot be empty.");
                         Console.ResetColor();
                     }
                 }
