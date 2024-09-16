@@ -28,7 +28,9 @@ namespace Refactoring
                 {
                     Console.Clear();
                     // Error handling: display a message and reprompt
-                    StandardMessages.InvalidPlayerCountEntry();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Invalid input. Please enter a positive integer greater than 0.");
+                    Console.ResetColor();
                 }
             }
 
@@ -49,7 +51,9 @@ namespace Refactoring
                     if (string.IsNullOrWhiteSpace(name))
                     {
                         Console.Clear();
-                        StandardMessages.InvalidPlayerNameEntry();
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Invalid input. Please enter a positive integer greater than 0.");
+                        Console.ResetColor();
                     }
                 }
 
