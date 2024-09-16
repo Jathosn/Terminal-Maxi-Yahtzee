@@ -40,6 +40,10 @@ namespace Refactoring
 
                 }
                 allPlayersComplete = PlayerData.players.All(p => PlayerData.IsScoreboardComplete(p));
+                foreach (var player in players)
+                {
+                    Console.WriteLine($"{player.Name}'s Scoreboard:");
+                }
                 Console.WriteLine("Game Over. Final Score:");
                 foreach (var player in players)
                 {

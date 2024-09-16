@@ -26,7 +26,7 @@ namespace Refactoring
                 Console.WriteLine($"It's your turn, {_player.Name}\n");
                 PlayerData.PrintPlayerCard(_player);
                 Console.WriteLine($"\u001b[38;2;255;150;0m\nYou have {_player.AvailableThrows} throw(s) available.\u001b[0m \n");
-                Console.WriteLine("Press 'ENTER' to throw\nPress 'S' to view scoreboard\nPress 'E' to end turn\nPress 'H' to view shorthand notations");
+                StandardMessages.NavbarPrompt();
 
                 while (!decisionMade)
                 {
@@ -44,7 +44,7 @@ namespace Refactoring
                             Console.Clear();
                             ViewScoreboard();
                             Console.WriteLine($"\u001b[38;2;255;150;0m\nYou have {_player.AvailableThrows} throw(s) available.\u001b[0m\n");
-                            Console.WriteLine("Press 'ENTER' to throw\nPress 'S' to view scoreboard\nPress 'E' to end turn\nPress 'H' to view shorthand notations");
+                            StandardMessages.NavbarPrompt();
                             decisionMade = false;  // Stay in the input loop
                             break;
 
@@ -52,7 +52,7 @@ namespace Refactoring
                             Console.Clear();
                             Shortcuts.DisplayShorthandNotations();
                             Console.WriteLine($"\u001b[38;2;255;150;0mYou have {_player.AvailableThrows} throw(s) available.\u001b[0m \n");
-                            Console.WriteLine("Press 'ENTER' to throw\nPress 'S' to view scoreboard\nPress 'E' to end turn\nPress 'H' to view shorthand notations");
+                            StandardMessages.NavbarPrompt();
                             decisionMade = false;  // Stay in the input loop
                             break;
 
@@ -87,10 +87,7 @@ namespace Refactoring
                             {
                                 Console.WriteLine($"\u001b[38;2;255;150;0mYou have {throwsRemaining} throw(s) remaining, {_player.Name}\u001b[0m \n");
                                 decisionMade = false;
-                                Console.WriteLine("Press 'ENTER' to continue");
-                                Console.WriteLine("Press 'S' to view scoreboard");
-                                Console.WriteLine("Press 'E' to end turn");
-                                Console.WriteLine("Press 'H' to view shorthand notations");
+                                StandardMessages.NavbarPrompt();
 
                                 while (!decisionMade)
                                 {
@@ -103,7 +100,7 @@ namespace Refactoring
                                         Console.ForegroundColor = ConsoleColor.White;
                                         Console.WriteLine($"\n{diceThrower.Dices()}");
                                         Console.WriteLine($"\u001b[38;2;255;150;0m\nYou have {throwsRemaining} throw(s) available.\u001b[0m \n");
-                                        Console.WriteLine("Press 'ENTER' to throw\nPress 'S' to view scoreboard\nPress 'E' to end turn\nPress 'H' to view shorthand notations");
+                                        StandardMessages.NavbarPrompt();
                                         decisionMade = false;  // Stay in the input loop
                                     }
                                     else if (keyPress == ConsoleKey.H)
@@ -113,7 +110,7 @@ namespace Refactoring
                                         Console.ForegroundColor = ConsoleColor.White;
                                         Console.WriteLine($"{diceThrower.Dices()}");
                                         Console.WriteLine($"\u001b[38;2;255;150;0m\nYou have {throwsRemaining} throw(s) available.\u001b[0m \n");
-                                        Console.WriteLine("Press 'ENTER' to throw\nPress 'S' to view scoreboard\nPress 'E' to end turn\nPress 'H' to view shorthand notations");
+                                        StandardMessages.NavbarPrompt();
                                         decisionMade = false;  // Stay in the input loop
                                     }
                                     else if (keyPress == ConsoleKey.E)
