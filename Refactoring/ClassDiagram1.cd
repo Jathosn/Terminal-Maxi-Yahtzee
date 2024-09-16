@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
+  <Class Name="Refactoring.DiceThrower">
+    <Position X="5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAEAIAAABAAAAAAAAAAIAAAAAAAAAAE=</HashCode>
+      <FileName>DiceThrower.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Refactoring.GameFlow">
+    <Position X="2.75" Y="3.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAgABAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>GameFlow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Refactoring.GameState">
+    <Position X="2.75" Y="5.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgCAAABAAAAAAAAAAgAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Refactoring.Player">
+    <Position X="7.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAAABAAAAQAAABAAAAAAACBAAgAAAA=</HashCode>
+      <FileName>Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Refactoring.PlayerData">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ABEAAAAAAAAAAAAAABAAAAAAAAAAAAAAIACAAAgAAAA=</HashCode>
+      <FileName>PlayerData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Refactoring.PlayerTurnHandler">
+    <Position X="2.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAIAAAAAGAAAAAAAAAAIAAAAAgAAAAA=</HashCode>
+      <FileName>PlayerTurnHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Refactoring.Program">
+    <Position X="7.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Refactoring.ScoreCalculator">
+    <Position X="5" Y="3.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>BACAAAAIBBAEAAAAACAAAAIAAACAAAAAAAAuEAAAAAA=</HashCode>
+      <FileName>ScoreCalculator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Refactoring.Shortcuts">
+    <Position X="7.25" Y="3.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAEAAAAABAAA=</HashCode>
+      <FileName>Shortcuts.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Refactoring.StandardMessages">
+    <Position X="0.5" Y="2.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAIEAAAIAAACEEAAICAAAAQAAAAQAAAAAAAAAgAAEQ=</HashCode>
+      <FileName>StandardMessages.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -26,7 +26,6 @@ namespace Refactoring
                     if (!player.IsScoreboardComplete())
                     {
                         Console.Clear();
-                        Console.WriteLine($"Player {player.Name}'s turn.");
                         PlayerTurnHandler turnHandler = new PlayerTurnHandler(player);
                         turnHandler.StartTurn();
                     }

@@ -23,7 +23,6 @@ namespace Refactoring
             {
                 bool decisionMade = false;
 
-                Console.Clear();
                 Console.WriteLine($"It's your turn, {_player.Name}\n");
                 PlayerData.PrintPlayerCard(_player);
                 Console.WriteLine($"\u001b[38;2;255;150;0m\nYou have {_player.AvailableThrows} throw(s) available.\u001b[0m \n");

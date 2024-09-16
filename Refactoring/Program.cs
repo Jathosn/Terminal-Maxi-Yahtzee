@@ -17,7 +17,7 @@ namespace Refactoring
             ScoreCalculator scoreCalculator = new ScoreCalculator();
             Console.WriteLine("Players added.");
 
-            StandardMessages.GameStarting();
+            Console.WriteLine();
             GameFlow gameFlow = new GameFlow(PlayerData.players);
             gameFlow.StartGame(); // Start the game using GameFlow
 

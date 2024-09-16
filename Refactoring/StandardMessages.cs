@@ -57,10 +57,6 @@ namespace Refactoring
             Console.WriteLine("Invalid input. Name cannot be empty");
             Console.ResetColor();
         }
-        public static void GameStarting()
-        {
-            Console.Write("Game starting...");
-        }
         public static void NavbarPrompt()
         {
             Console.WriteLine($"Press 'ENTER' to throw\nPress 'S' to view scoreboard \nPress 'E' to end turn \nPress 'H' to view shorthand notations");
