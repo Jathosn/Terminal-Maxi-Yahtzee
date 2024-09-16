@@ -44,7 +44,9 @@ namespace Refactoring
                 {
                     Console.WriteLine($"{player.Name}'s Scoreboard:");
                 }
-                Console.WriteLine("Game Over. Final Score:");
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.WriteLine("Game Over. Final Score:\n");
+                Console.ResetColor();
                 foreach (var player in players)
                 {
                     int finalScore = scoreCalculator.CalculateTotalScore(player);
