@@ -21,11 +21,11 @@
       <FileName>Program.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Refactoring.ScoreCalculator">
+  <Class Name="Refactoring.ScoreboardEntryCalculation">
     <Position X="5" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>BACAAAAIBBAEAAAAACAAAAIAAACAAAAAAAAuEAAAAAA=</HashCode>
-      <FileName>ScoreCalculator.cs</FileName>
+      <HashCode>BIAAAACABBQAAAAAQAAEAIBAIAAgAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>ScoreboardEntryCalculation.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Refactoring.Shortcuts">
@@ -38,7 +38,7 @@
   <Class Name="Refactoring.StandardMessages">
     <Position X="0.5" Y="2.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAIEAAAIAAACEEAAICAAAAQAAAAQAAAAAAAAAgAAEA=</HashCode>
+      <HashCode>AAAAEAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>StandardMessages.cs</FileName>
     </TypeIdentifier>
   </Class>

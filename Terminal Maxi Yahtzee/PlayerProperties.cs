@@ -70,11 +70,11 @@ namespace Refactoring
 
             if (PlayerCard.ContainsKey(inputCategory) && !PlayerCard[inputCategory].HasValue)
             {
-                int score = turnSkipped ? 0 : ScoreCalculator.ScoreFunctions[inputCategory](diceValues); // Set score to 0 if no dice were rolled
+                int score = turnSkipped ? 0 : ScoreboardEntryCalculation.ScoreFunctions[inputCategory](diceValues); // Set score to 0 if no dice were rolled
                 PlayerCard[inputCategory] = score;
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.ResetColor();
-                ScoreCalculator.CheckBonusEligibility(this);
+                ScoreboardEntryCalculation.CheckBonusEligibility(this);
             }
             else
             {

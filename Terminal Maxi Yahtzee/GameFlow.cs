@@ -7,12 +7,12 @@ namespace Refactoring
     public class GameFlow
     {
         private List<PlayerProperties> _players;
-        private ScoreCalculator _scoreCalculator;
+        private ScoreboardEntryCalculation _scoreCalculator;
 
         public GameFlow(List<PlayerProperties> players)
         {
             _players = players;
-            _scoreCalculator = new ScoreCalculator();
+            _scoreCalculator = new ScoreboardEntryCalculation();
         }
 
         public void GameInitializer()

@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace Refactoring
 {
-    internal class ScoreCalculator
+    internal class ScoreboardEntryCalculation
     {
             public static Dictionary<string, Func<int[], int>> ScoreFunctions { get; private set; }
 
-            static ScoreCalculator()
+            static ScoreboardEntryCalculation()
             {
                 ScoreFunctions = new Dictionary<string, Func<int[], int>>
         {
@@ -18,24 +18,24 @@ namespace Refactoring
             {"fours", dice => dice.Where(d => d == 4).Sum(d => 4)},
             {"fives", dice => dice.Where(d => d == 5).Sum(d => 5)},
             {"sixes", dice => dice.Where(d => d == 6).Sum(d => 6)},
-            {"one pair", dice => GetHighestPairScore(dice)},
-            {"two pairs", dice => GetTwoPairScore(dice)},
-            {"three pairs", dice => GetThreePairsScore(dice)},
-            {"3 same", dice => GetOfAKindScore(dice, 3)},
-            {"4 same", dice => GetOfAKindScore(dice, 4)},
-            {"5 same", dice => GetOfAKindScore(dice, 5)},
-            {"small straight", dice => GetSmallStraightScore(dice)},
-            {"large straight", dice => GetLargeStraightScore(dice)},
-            {"full straight", dice => GetFullStraightScore(dice)},
-            {"hut 2+3", dice => GetHut(dice)},
-            {"house 3+3", dice => GetHouse(dice)},
-            {"tower 2+4", dice => GetTowerScore(dice)},
+            {"one pair", dice => OnePairCalculation(dice)},
+            {"two pairs", dice => TwoPairCalculation(dice)},
+            {"three pairs", dice => ThreePairCalculation(dice)},
+            {"3 same", dice => nOfAKindCalculation(dice, 3)},
+            {"4 same", dice => nOfAKindCalculation(dice, 4)},
+            {"5 same", dice => nOfAKindCalculation(dice, 5)},
+            {"small straight", dice => SmallStraightValidator(dice)},
+            {"large straight", dice => LargeStraigtValidator(dice)},
+            {"full straight", dice => FullStraightValidator(dice)},
+            {"hut 2+3", dice => HutCalculation(dice)},
+            {"house 3+3", dice => HouseCalculation(dice)},
+            {"tower 2+4", dice => TowerCalculation(dice)},
             {"chance", dice => dice.Sum()},
-            {"maxi-yahtzee", dice => GetMaxiYahtzeeScore(dice)}
+            {"maxi-yahtzee", dice => MaxiYahtzeeValidator(dice)}
         };
             }
 
-            private static int GetHighestPairScore(int[] dice)
+            private static int OnePairCalculation(int[] dice)
             {
                 // Group dice by value and filter groups where at least two dice share the same value
                 var pairs = dice.GroupBy(d => d)
@@ -53,7 +53,7 @@ namespace Refactoring
                 return 0;
             }
 
-            private static int GetTwoPairScore(int[] dice)
+            private static int TwoPairCalculation(int[] dice)
             {
                 // Group the dice by their values
                 var pairs = dice.GroupBy(d => d)
@@ -73,7 +73,7 @@ namespace Refactoring
             }
 
 
-            private static int GetThreePairsScore(int[] dice)
+            private static int ThreePairCalculation(int[] dice)
             {
                 // Group by dice values and filter only groups that have exactly 2 of the same kind
                 var groups = dice.GroupBy(d => d)
@@ -89,7 +89,7 @@ namespace Refactoring
                 return 0;
             }
 
-            private static int GetOfAKindScore(int[] dice, int count)
+            private static int nOfAKindCalculation(int[] dice, int count)
             {
                 return dice.GroupBy(d => d)
                            .Where(g => g.Count() >= count)
@@ -97,7 +97,7 @@ namespace Refactoring
                            .FirstOrDefault();
             }
 
-            private static int GetSmallStraightScore(int[] dice)
+            private static int SmallStraightValidator(int[] dice)
             {
                 var straight = new HashSet<int>(dice);
                 if (new int[] { 1, 2, 3, 4, 5 }.All(straight.Contains))
@@ -105,7 +105,7 @@ namespace Refactoring
                 return 0;
             }
 
-            private static int GetLargeStraightScore(int[] dice)
+            private static int LargeStraigtValidator(int[] dice)
             {
                 var straight = new HashSet<int>(dice);
                 if (new int[] { 2, 3, 4, 5, 6 }.All(straight.Contains))
@@ -113,12 +113,12 @@ namespace Refactoring
                 return 0;
             }
 
-            private static int GetFullStraightScore(int[] dice)
+            private static int FullStraightValidator(int[] dice)
             {
                 return new HashSet<int>(dice).Count == 6 ? 21 : 0;
             }
 
-            private static int GetHut(int[] dice)
+            private static int HutCalculation(int[] dice)
             {
                 var groups = dice.GroupBy(d => d).ToList();
 
@@ -136,13 +136,13 @@ namespace Refactoring
                 return 0;
             }
 
-            private static int GetHouse(int[] dice)
+            private static int HouseCalculation(int[] dice)
             {
                 var groups = dice.GroupBy(d => d).ToList();
                 return groups.Count(g => g.Count() >= 3) == 2 ? groups.Sum(g => g.Key * g.Count()) : 0;
             }
 
-            private static int GetTowerScore(int[] dice)
+            private static int TowerCalculation(int[] dice)
             {
                 var groups = dice.GroupBy(d => d).ToList();
                 if (groups.Any(g => g.Count() == 4) && groups.Any(g => g.Count() == 2))
@@ -150,7 +150,7 @@ namespace Refactoring
                 return 0;
             }
 
-            private static int GetMaxiYahtzeeScore(int[] dice)
+            private static int MaxiYahtzeeValidator(int[] dice)
             {
                 if (dice == null || dice.Length == 0 || dice.All(d => d == 0))
                 {

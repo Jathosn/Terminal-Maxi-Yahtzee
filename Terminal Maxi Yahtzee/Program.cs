@@ -12,7 +12,7 @@ namespace Refactoring
             StandardMessages.WelcomeMessage();
             PlayerData.PlayerCount();
             PlayerData.PlayerName();
-            ScoreCalculator scoreCalculator = new ScoreCalculator();
+            ScoreboardEntryCalculation scoreCalculator = new ScoreboardEntryCalculation();
             Console.WriteLine("Players added.");
 
             Console.WriteLine();
