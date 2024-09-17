@@ -27,12 +27,9 @@ namespace Refactoring
                 {
                     bool isComplete = PlayerData.IsScoreboardComplete(player);
 
-                    Console.WriteLine($"{player.Name}'s scoreboard is complete: {isComplete}");
-
                     if (!isComplete)
                     {
                         TurnHandler turnHandler = new TurnHandler(player);
-                        Console.WriteLine($"Handler escaped");
                         Console.WriteLine($"Number of players: {players.Count}");
                     }
 
@@ -42,19 +39,11 @@ namespace Refactoring
                 {
                     Console.WriteLine($"{player.Name}'s Scoreboard:");
                 }
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.WriteLine("Game Over. Final Score:\n");
-                Console.ResetColor();
-                foreach (var player in players)
-                {
-                    int finalScore = scoreCalculator.CalculateTotalScore(player);
-                    Console.WriteLine($"{player.Name}'s final score: {finalScore}");
-                }
             }
 
-               
-
-            Console.ReadKey();
+            while (true) //infinite loop to prevent accidental application closing
+            {
+            }
         }
     }
 }
