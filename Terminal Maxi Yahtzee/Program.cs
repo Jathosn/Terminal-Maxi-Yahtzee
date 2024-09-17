@@ -49,7 +49,6 @@ namespace Refactoring
                 {
                     int finalScore = scoreCalculator.CalculateTotalScore(player);
                     Console.WriteLine($"{player.Name}'s final score: {finalScore}");
-                    Console.WriteLine("test");
                 }
             }
 
