@@ -82,7 +82,7 @@ namespace Refactoring
                             {
                                 Console.WriteLine($"\u001b[38;2;255;150;0mYou have {throwsRemaining} throw(s) remaining, {_player.Name}\u001b[0m \n");
                                 decisionMade = false;
-                                StandardMessages.NavbarPrompt();
+                                StandardMessages.NavbarContinue();
 
                                 while (!decisionMade)
                                 {
@@ -95,7 +95,7 @@ namespace Refactoring
                                         Console.ForegroundColor = ConsoleColor.White;
                                         Console.WriteLine($"\n{diceThrower.Dices()}");
                                         Console.WriteLine($"\u001b[38;2;255;150;0m\nYou have {throwsRemaining} throw(s) available.\u001b[0m \n");
-                                        StandardMessages.NavbarPrompt();
+                                        StandardMessages.NavbarContinue();
                                         decisionMade = false;  // Stay in the input loop
                                     }
                                     else if (keyPress == ConsoleKey.H)
@@ -105,7 +105,7 @@ namespace Refactoring
                                         Console.ForegroundColor = ConsoleColor.White;
                                         Console.WriteLine($"{diceThrower.Dices()}");
                                         Console.WriteLine($"\u001b[38;2;255;150;0m\nYou have {throwsRemaining} throw(s) available.\u001b[0m \n");
-                                        StandardMessages.NavbarPrompt();
+                                        StandardMessages.NavbarContinue();
                                         decisionMade = false;  // Stay in the input loop
                                     }
                                     else if (keyPress == ConsoleKey.E)

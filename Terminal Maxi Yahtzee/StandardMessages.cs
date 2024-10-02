@@ -13,5 +13,9 @@ namespace Refactoring
         {
             Console.WriteLine($"Press 'ENTER' to throw\nPress 'S' to view scoreboard \nPress 'E' to end turn \nPress 'H' to view shorthand notations");
         }
+        public static void NavbarContinue()
+        {
+            Console.WriteLine($"Press 'ENTER' to continue\nPress 'S' to view scoreboard \nPress 'E' to end turn \nPress 'H' to view shorthand notations");
+        }
     }
 }
